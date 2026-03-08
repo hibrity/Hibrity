@@ -1,1 +1,54 @@
-t
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Hibrity</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+</head>
+
+<body class="bg-[#050c08] text-white">
+
+<div class="max-w-6xl mx-auto px-6 py-20">
+
+<h1 class="text-6xl font-black text-[#18ff6d]">
+Hibrity
+</h1>
+
+<p class="mt-6 text-xl text-zinc-300 max-w-xl">
+Rede híbrida de entregadores conectando empresas e motoboys
+para garantir entregas rápidas mesmo em momentos de alta demanda.
+</p>
+
+<div class="mt-12 grid md:grid-cols-3 gap-6">
+
+<div class="bg-white/5 border border-white/10 p-6 rounded-xl">
+<h3 class="text-xl font-bold">Rede de apoio</h3>
+<p class="text-zinc-400 mt-3">
+Entregadores independentes disponíveis quando sua empresa precisar.
+</p>
+</div>
+
+<div class="bg-white/5 border border-white/10 p-6 rounded-xl">
+<h3 class="text-xl font-bold">Prioridade da casa</h3>
+<p class="text-zinc-400 mt-3">
+Seus entregadores continuam sendo prioridade na operação.
+</p>
+</div>
+
+<div class="bg-white/5 border border-white/10 p-6 rounded-xl">
+<h3 class="text-xl font-bold">Despacho inteligente</h3>
+<p class="text-zinc-400 mt-3">
+O sistema decide automaticamente quem recebe a entrega.
+</p>
+</div>
+
+</div>
+
+</div>
+
+</body>
+</html>
