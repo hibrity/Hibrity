@@ -1,54 +1,180 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Hibrity</title>
-
-<script src="https://cdn.tailwindcss.com"></script>
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hibrity</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
 <body class="bg-[#050c08] text-white">
+  <div class="min-h-screen">
+    
+    <!-- HERO -->
+    <section class="max-w-7xl mx-auto px-6 py-20 md:py-28">
+      <div class="grid md:grid-cols-2 gap-12 items-center">
+        
+        <div>
+          <div class="inline-flex items-center px-4 py-2 rounded-full border border-[#18ff6d]/30 bg-[#18ff6d]/10 text-[#18ff6d] text-sm">
+            Ecossistema de logística inteligente
+          </div>
 
-<div class="max-w-6xl mx-auto px-6 py-20">
+          <h1 class="text-5xl md:text-7xl font-black mt-6 tracking-tight">
+            Hibrity
+          </h1>
 
-<h1 class="text-6xl font-black text-[#18ff6d]">
-Hibrity
-</h1>
+          <p class="mt-6 text-lg md:text-xl text-zinc-300 max-w-2xl leading-relaxed">
+            Plataforma central para acesso aos sistemas da operação logística,
+            gestão de entregas, aplicativos de entregadores e futuras soluções do ecossistema.
+          </p>
 
-<p class="mt-6 text-xl text-zinc-300 max-w-xl">
-Rede híbrida de entregadores conectando empresas e motoboys
-para garantir entregas rápidas mesmo em momentos de alta demanda.
-</p>
+          <div class="mt-10 flex flex-wrap gap-4">
+            <a href="https://routergo.netlify.app"
+               class="px-7 py-3 rounded-xl bg-[#18ff6d] text-[#050c08] font-bold hover:scale-[1.02] transition">
+              Acessar sistema principal
+            </a>
 
-<div class="mt-12 grid md:grid-cols-3 gap-6">
+            <a href="#produtos"
+               class="px-7 py-3 rounded-xl border border-white/15 bg-white/5 font-semibold hover:bg-white/10 transition">
+              Ver produtos
+            </a>
+          </div>
+        </div>
 
-<div class="bg-white/5 border border-white/10 p-6 rounded-xl">
-<h3 class="text-xl font-bold">Rede de apoio</h3>
-<p class="text-zinc-400 mt-3">
-Entregadores independentes disponíveis quando sua empresa precisar.
-</p>
-</div>
+        <div class="rounded-3xl border border-white/10 bg-white/5 p-8 shadow-2xl backdrop-blur-sm">
+          <div class="text-zinc-400 text-sm">Visão geral</div>
+          <div class="text-[#18ff6d] text-3xl font-bold mt-2">
+            Tecnologia para operação, entrega e escala
+          </div>
 
-<div class="bg-white/5 border border-white/10 p-6 rounded-xl">
-<h3 class="text-xl font-bold">Prioridade da casa</h3>
-<p class="text-zinc-400 mt-3">
-Seus entregadores continuam sendo prioridade na operação.
-</p>
-</div>
+          <div class="grid grid-cols-2 gap-4 mt-8">
+            <div class="rounded-2xl bg-black/20 p-5">
+              <div class="text-zinc-400 text-sm">Produtos</div>
+              <div class="text-3xl font-black mt-1">3+</div>
+            </div>
 
-<div class="bg-white/5 border border-white/10 p-6 rounded-xl">
-<h3 class="text-xl font-bold">Despacho inteligente</h3>
-<p class="text-zinc-400 mt-3">
-O sistema decide automaticamente quem recebe a entrega.
-</p>
-</div>
+            <div class="rounded-2xl bg-black/20 p-5">
+              <div class="text-zinc-400 text-sm">Expansão</div>
+              <div class="text-3xl font-black mt-1">Modular</div>
+            </div>
+          </div>
 
-</div>
+          <div class="mt-5 rounded-2xl bg-black/20 p-5">
+            <div class="text-zinc-400 text-sm">Objetivo</div>
+            <div class="mt-2 text-lg font-bold leading-snug">
+              Centralizar sistemas, facilitar acessos e preparar a evolução da plataforma Hibrity.
+            </div>
+          </div>
+        </div>
 
-</div>
+      </div>
+    </section>
 
+    <!-- PRODUTOS -->
+    <section id="produtos" class="max-w-7xl mx-auto px-6 pb-20">
+      <div class="mb-12">
+        <h2 class="text-4xl md:text-5xl font-black">Produtos</h2>
+        <p class="text-zinc-400 mt-4 text-lg">
+          Acesse os sistemas que fazem parte do ecossistema Hibrity.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-2 xl:grid-cols-3 gap-8">
+        
+        <!-- RouterGo + Entregago -->
+        <a href="https://routergo.netlify.app"
+           class="group rounded-3xl border border-white/10 bg-white/5 p-8 hover:border-[#18ff6d]/50 hover:-translate-y-1 transition block shadow-xl">
+          <div class="w-14 h-14 rounded-2xl bg-[#18ff6d]/15 flex items-center justify-center text-3xl">
+            🚚
+          </div>
+
+          <h3 class="text-2xl font-black mt-6">RouterGo + Entregago</h3>
+
+          <p class="text-zinc-400 mt-4 leading-7">
+            Sistema completo de gestão de entregas com acesso operacional e aplicativo do entregador.
+          </p>
+
+          <div class="mt-8 flex items-center justify-between">
+            <span class="text-[#18ff6d] font-bold">Acessar</span>
+            <span class="text-zinc-500 group-hover:text-[#18ff6d] transition">→</span>
+          </div>
+        </a>
+
+        <!-- HibrityGo -->
+        <div class="rounded-3xl border border-white/10 bg-white/5 p-8 shadow-xl">
+          <div class="w-14 h-14 rounded-2xl bg-[#18ff6d]/15 flex items-center justify-center text-3xl">
+            🛵
+          </div>
+
+          <h3 class="text-2xl font-black mt-6">HibrityGo</h3>
+
+          <p class="text-zinc-400 mt-4 leading-7">
+            Rede híbrida de entregadores independentes para apoio logístico entre empresas e operações sob demanda.
+          </p>
+
+          <div class="mt-8 inline-flex px-4 py-2 rounded-full bg-white/5 border border-white/10 text-zinc-400 text-sm">
+            Em desenvolvimento
+          </div>
+        </div>
+
+        <!-- Futuros módulos -->
+        <div class="rounded-3xl border border-dashed border-white/15 bg-white/5 p-8 shadow-xl">
+          <div class="w-14 h-14 rounded-2xl bg-white/5 flex items-center justify-center text-3xl">
+            ✨
+          </div>
+
+          <h3 class="text-2xl font-black mt-6">Novos módulos</h3>
+
+          <p class="text-zinc-400 mt-4 leading-7">
+            A Hibrity será a base para futuros sistemas de operação, automação, análise e expansão logística.
+          </p>
+
+          <div class="mt-8 inline-flex px-4 py-2 rounded-full bg-white/5 border border-white/10 text-zinc-400 text-sm">
+            Em breve
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- VISÃO -->
+    <section class="border-t border-white/10 bg-black/20">
+      <div class="max-w-7xl mx-auto px-6 py-20">
+        <div class="max-w-3xl">
+          <h2 class="text-4xl font-black">Uma base para crescer</h2>
+          <p class="mt-6 text-zinc-300 text-lg leading-8">
+            A Hibrity nasce como uma central de produtos e evolui para um ecossistema de tecnologia focado em
+            logística, operação e inteligência de entregas.
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-6 mt-12">
+          <div class="rounded-2xl bg-white/5 border border-white/10 p-6">
+            <div class="text-sm text-zinc-400">Operação</div>
+            <div class="mt-2 text-xl font-bold">Gestão centralizada</div>
+          </div>
+
+          <div class="rounded-2xl bg-white/5 border border-white/10 p-6">
+            <div class="text-sm text-zinc-400">Entregadores</div>
+            <div class="mt-2 text-xl font-bold">Apps e rede própria</div>
+          </div>
+
+          <div class="rounded-2xl bg-white/5 border border-white/10 p-6">
+            <div class="text-sm text-zinc-400">Escalabilidade</div>
+            <div class="mt-2 text-xl font-bold">Novos sistemas e módulos</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="border-t border-white/10">
+      <div class="max-w-7xl mx-auto px-6 py-8 text-sm text-zinc-500 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+        <div>Hibrity • Ecossistema de produtos</div>
+        <div>RouterGo • Entregago • HibrityGo</div>
+      </div>
+    </footer>
+
+  </div>
 </body>
 </html>
