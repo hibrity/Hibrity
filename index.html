@@ -5,6 +5,47 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Hibrity</title>
 <script src="https://cdn.tailwindcss.com"></script>
+
+<script>
+function toggleSystems() {
+  const grid = document.getElementById("moreSystems");
+  const btn = document.getElementById("systemsBtn");
+
+  grid.classList.toggle("hidden");
+
+  if (grid.classList.contains("hidden")) {
+    btn.innerText = "Ver mais sistemas";
+  } else {
+    btn.innerText = "Ver menos sistemas";
+  }
+}
+
+function toggleApps() {
+  const grid = document.getElementById("appsGrid");
+  const btn = document.getElementById("appsBtn");
+
+  grid.classList.toggle("hidden");
+
+  if (grid.classList.contains("hidden")) {
+    btn.innerText = "Ver apps";
+  } else {
+    btn.innerText = "Ocultar apps";
+  }
+}
+
+function toggleTestimonials() {
+  const grid = document.getElementById("moreTestimonials");
+  const btn = document.getElementById("testimonialsBtn");
+
+  grid.classList.toggle("hidden");
+
+  if (grid.classList.contains("hidden")) {
+    btn.innerText = "Ver todos";
+  } else {
+    btn.innerText = "Ver menos";
+  }
+}
+</script>
 </head>
 
 <body class="bg-[#050c08] text-white">
@@ -14,7 +55,6 @@
 <section class="max-w-7xl mx-auto px-6 py-16">
 
 <div class="max-w-4xl">
-
 <div class="flex items-center gap-4">
 
 <img
@@ -33,19 +73,23 @@ Hibrity ai
 <p class="mt-4 text-lg text-zinc-300">
 O melhor de dois mundos.
 </p>
-
 </div>
 
 
-<!-- GRID SISTEMAS -->
+<!-- SISTEMAS -->
+<div class="mt-14">
 
-<div id="sistemas" class="mt-14 grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
+<h2 class="text-xl font-bold mb-6">
+Sistemas
+</h2>
+
+
+<div class="grid grid-cols-2 gap-4">
 
 <!-- RouterGo -->
-
 <a
 href="https://routergo.netlify.app"
-class="rounded-2xl border border-white/10 bg-white/5 p-5 hover:border-[#18ff6d]/50 transition shadow-lg"
+class="rounded-2xl border border-[#18ff6d]/30 bg-white/5 p-5 shadow-lg hover:border-[#18ff6d]/60 transition"
 >
 
 <div class="w-10 h-10 rounded-xl bg-[#18ff6d]/15 flex items-center justify-center text-xl">
@@ -67,101 +111,8 @@ Disponível
 </a>
 
 
-<!-- Ede -->
-
-<div class="rounded-2xl border border-white/10 bg-white/5 p-5 shadow-lg">
-
-<div class="w-10 h-10 rounded-xl bg-[#18ff6d]/15 flex items-center justify-center text-xl">
-🧾
-</div>
-
-<h3 class="text-lg font-bold mt-4">
-Ede
-</h3>
-
-<p class="text-zinc-400 text-sm mt-2 line-clamp-2">
-Plataforma de operações digitais.
-</p>
-
-<div class="mt-4 text-xs text-zinc-400">
-Em desenvolvimento
-</div>
-
-</div>
-
-
-<!-- Guardio -->
-
-<div class="rounded-2xl border border-white/10 bg-white/5 p-5 shadow-lg">
-
-<div class="w-10 h-10 rounded-xl bg-[#18ff6d]/15 flex items-center justify-center text-xl">
-🔐
-</div>
-
-<h3 class="text-lg font-bold mt-4">
-Guardio
-</h3>
-
-<p class="text-zinc-400 text-sm mt-2 line-clamp-2">
-Controle de acesso e gestão de pessoas.
-</p>
-
-<div class="mt-4 text-xs text-zinc-400">
-Em desenvolvimento
-</div>
-
-</div>
-
-
-<!-- Gersco -->
-
-<div class="rounded-2xl border border-white/10 bg-white/5 p-5 shadow-lg">
-
-<div class="w-10 h-10 rounded-xl bg-[#18ff6d]/15 flex items-center justify-center text-xl">
-🎓
-</div>
-
-<h3 class="text-lg font-bold mt-4">
-Gersco
-</h3>
-
-<p class="text-zinc-400 text-sm mt-2 line-clamp-2">
-Gestão de ambientes educacionais.
-</p>
-
-<div class="mt-4 text-xs text-zinc-400">
-Em desenvolvimento
-</div>
-
-</div>
-
-
-<!-- Finager -->
-
-<div class="rounded-2xl border border-white/10 bg-white/5 p-5 shadow-lg">
-
-<div class="w-10 h-10 rounded-xl bg-[#18ff6d]/15 flex items-center justify-center text-xl">
-💰
-</div>
-
-<h3 class="text-lg font-bold mt-4">
-Finager
-</h3>
-
-<p class="text-zinc-400 text-sm mt-2 line-clamp-2">
-Gestão financeira para empresas.
-</p>
-
-<div class="mt-4 text-xs text-zinc-400">
-Em desenvolvimento
-</div>
-
-</div>
-
-
 <!-- RH Digital -->
-
-<div class="rounded-2xl border border-white/10 bg-white/5 p-5 shadow-lg">
+<div class="rounded-2xl border border-[#18ff6d]/20 bg-white/5 p-5 shadow-lg">
 
 <div class="w-10 h-10 rounded-xl bg-[#18ff6d]/15 flex items-center justify-center text-xl">
 👥
@@ -181,132 +132,74 @@ Em desenvolvimento
 
 </div>
 
+</div>
 
-<!-- Idcontrol -->
+
+<div class="flex justify-center mt-6">
+
+<button
+id="systemsBtn"
+onclick="toggleSystems()"
+class="px-6 py-3 rounded-xl border border-white/10 bg-white/5 font-semibold hover:bg-white/10 transition">
+Ver mais sistemas
+</button>
+
+</div>
+
+
+<div id="moreSystems" class="hidden mt-8 grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
 
 <div class="rounded-2xl border border-white/10 bg-white/5 p-5 shadow-lg">
-
-<div class="w-10 h-10 rounded-xl bg-[#18ff6d]/15 flex items-center justify-center text-xl">
-📍
+<h3 class="text-lg font-bold">Ede</h3>
+<p class="text-zinc-400 text-sm mt-2">Plataforma de operações digitais.</p>
 </div>
-
-<h3 class="text-lg font-bold mt-4">
-Idcontrol
-</h3>
-
-<p class="text-zinc-400 text-sm mt-2 line-clamp-2">
-Monitoramento responsável familiar.
-</p>
-
-<div class="mt-4 text-xs text-zinc-400">
-Em desenvolvimento
-</div>
-
-</div>
-
-
-<!-- Mantene -->
 
 <div class="rounded-2xl border border-white/10 bg-white/5 p-5 shadow-lg">
-
-<div class="w-10 h-10 rounded-xl bg-[#18ff6d]/15 flex items-center justify-center text-xl">
-🛠️
+<h3 class="text-lg font-bold">Guardio</h3>
+<p class="text-zinc-400 text-sm mt-2">Controle de acesso e gestão de pessoas.</p>
 </div>
-
-<h3 class="text-lg font-bold mt-4">
-Mantene
-</h3>
-
-<p class="text-zinc-400 text-sm mt-2 line-clamp-2">
-Gestão de manutenção predial e ativos.
-</p>
-
-<div class="mt-4 text-xs text-zinc-400">
-Em desenvolvimento
-</div>
-
-</div>
-
-
-<!-- Imobix -->
 
 <div class="rounded-2xl border border-white/10 bg-white/5 p-5 shadow-lg">
-
-<div class="w-10 h-10 rounded-xl bg-[#18ff6d]/15 flex items-center justify-center text-xl">
-🏢
-</div>
-
-<h3 class="text-lg font-bold mt-4">
-Imobix
-</h3>
-
-<p class="text-zinc-400 text-sm mt-2 line-clamp-2">
-Gestão de imóveis, contratos e clientes para imobiliárias.
-</p>
-
-<div class="mt-4 text-xs text-zinc-400">
-Em desenvolvimento
-</div>
-
-</div>
-
-
-<!-- Oficor -->
-
-<div class="rounded-2xl border border-white/10 bg-white/5 p-5 shadow-lg">
-
-<div class="w-10 h-10 rounded-xl bg-[#18ff6d]/15 flex items-center justify-center text-xl">
-🔧
-</div>
-
-<h3 class="text-lg font-bold mt-4">
-Oficor
-</h3>
-
-<p class="text-zinc-400 text-sm mt-2 line-clamp-2">
-Gestão de serviços, clientes e ordens de serviço para oficinas.
-</p>
-
-<div class="mt-4 text-xs text-zinc-400">
-Em desenvolvimento
+<h3 class="text-lg font-bold">Gersco</h3>
+<p class="text-zinc-400 text-sm mt-2">Gestão educacional.</p>
 </div>
 
 </div>
 
 </div>
 
-</section>
 
 <!-- MÉTRICAS -->
-
 <section class="max-w-7xl mx-auto px-6 pb-20">
 
-<div class="grid md:grid-cols-3 gap-6">
+<div class="grid md:grid-cols-3 gap-4 md:gap-6">
 
-<div class="rounded-3xl border border-white/10 bg-white/5 p-8 text-center shadow-xl">
-<div class="text-4xl font-black text-[#18ff6d]">+150 mil</div>
-<div class="mt-3 text-zinc-300 text-lg">usuários</div>
+<div class="rounded-3xl border border-white/10 bg-white/5 p-5 md:p-8 text-center shadow-xl">
+<div class="text-2xl md:text-4xl font-black text-[#18ff6d]">+150 mil</div>
+<div class="mt-2 md:mt-3 text-zinc-300 text-base md:text-lg">usuários</div>
 </div>
 
-<div class="rounded-3xl border border-white/10 bg-white/5 p-8 text-center shadow-xl">
-<div class="text-4xl font-black text-[#18ff6d]">+200 mil</div>
-<div class="mt-3 text-zinc-300 text-lg">acessos</div>
+<div class="rounded-3xl border border-white/10 bg-white/5 p-5 md:p-8 text-center shadow-xl">
+<div class="text-2xl md:text-4xl font-black text-[#18ff6d]">+200 mil</div>
+<div class="mt-2 md:mt-3 text-zinc-300 text-base md:text-lg">acessos</div>
 </div>
 
-<div class="rounded-3xl border border-white/10 bg-white/5 p-8 text-center shadow-xl">
-<div class="text-4xl font-black text-[#18ff6d]">3+</div>
-<div class="mt-3 text-zinc-300 text-lg">plataformas em evolução</div>
+<div class="rounded-3xl border border-white/10 bg-white/5 p-5 md:p-8 text-center shadow-xl">
+<div class="text-2xl md:text-4xl font-black text-[#18ff6d]">3+</div>
+<div class="mt-2 md:mt-3 text-zinc-300 text-base md:text-lg">plataformas em evolução</div>
 </div>
 
 </div>
 
 </section>
 
-<!-- DEPOIMENTOS -->
 
+<!-- DEPOIMENTOS -->
 <section class="max-w-7xl mx-auto px-6 pb-20">
 
-<div class="mb-12">
+<div class="mb-12 flex items-center justify-between">
+
+<div>
 <h2 class="text-4xl md:text-5xl font-black">Quem utiliza aprova</h2>
 
 <p class="text-zinc-400 mt-4 text-lg">
@@ -314,17 +207,37 @@ Soluções pensadas para operação, produtividade e crescimento digital.
 </p>
 </div>
 
-<div class="grid md:grid-cols-3 gap-8">
+<button
+id="testimonialsBtn"
+onclick="toggleTestimonials()"
+class="px-5 py-3 rounded-xl border border-white/10 bg-white/5 font-semibold hover:bg-white/10 transition">
+Ver todos
+</button>
 
-<div class="rounded-3xl border border-white/10 bg-white/5 p-8 shadow-xl">
-<p class="text-zinc-300 leading-7">
+</div>
+
+
+<!-- 1 DEPOIMENTO EM DESTAQUE -->
+<div class="grid md:grid-cols-1 gap-8">
+
+<div class="rounded-3xl border border-[#18ff6d]/30 bg-white/5 p-10 shadow-xl">
+
+<p class="text-zinc-200 text-xl leading-8">
 “A Hibrity trouxe uma visão mais organizada dos nossos sistemas e facilitou muito o acesso às ferramentas do dia a dia.”
 </p>
+
 <div class="mt-6">
-<div class="font-bold">Marina Costa</div>
+<div class="font-bold text-lg">Marina Costa</div>
 <div class="text-sm text-zinc-500">Gestora operacional</div>
 </div>
+
 </div>
+
+</div>
+
+
+<!-- DEPOIMENTOS OCULTOS -->
+<div id="moreTestimonials" class="hidden mt-8 grid md:grid-cols-3 gap-8">
 
 <div class="rounded-3xl border border-white/10 bg-white/5 p-8 shadow-xl">
 <p class="text-zinc-300 leading-7">
@@ -338,7 +251,7 @@ Soluções pensadas para operação, produtividade e crescimento digital.
 
 <div class="rounded-3xl border border-white/10 bg-white/5 p-8 shadow-xl">
 <p class="text-zinc-300 leading-7">
-“A proposta da Hibrity mostra maturidade de plataforma. É o tipo de estrutura que permite crescer sem perder organização.”
+“A proposta da Hibrity mostra maturidade de plataforma e visão de crescimento.”
 </p>
 <div class="mt-6">
 <div class="font-bold">Juliana Freitas</div>
@@ -346,19 +259,29 @@ Soluções pensadas para operação, produtividade e crescimento digital.
 </div>
 </div>
 
+<div class="rounded-3xl border border-white/10 bg-white/5 p-8 shadow-xl">
+<p class="text-zinc-300 leading-7">
+“Uma estrutura que permite integrar sistemas e evoluir a operação com organização.”
+</p>
+<div class="mt-6">
+<div class="font-bold">Carlos Henrique</div>
+<div class="text-sm text-zinc-500">Gestor administrativo</div>
+</div>
+</div>
+
 </div>
 
 </section>
 
-<!-- FOOTER -->
 
+<!-- FOOTER -->
 <footer class="border-t border-white/10">
 
 <div class="max-w-7xl mx-auto px-6 py-8 text-sm text-zinc-500 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
 
 <div>Hibrity • Ecossistema de tecnologia</div>
 
-<div>RouterGo • Ede • Guardio • Gersco • Finager • RH Digital • Idcontrol • Mantene • Imobix • Oficor</div>
+<div>RouterGo • RH Digital • Ede • Guardio • Gersco • Finager • Idcontrol • Mantene • Imobix • Oficor • Hibrity Apps</div>
 
 </div>
 
