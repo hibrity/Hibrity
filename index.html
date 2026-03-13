@@ -1,944 +1,417 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Idcontrol</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hibrity</title>
+<script src="https://cdn.tailwindcss.com"></script>
 
-  <script type="module">
-    import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
-    window.supabase = createClient(
-      "https://zbxrpprwjrholrycwsqa.supabase.co",
-      "sb_publishable_c4O2UN_u487qWsu4TNwG0Q_OGj3aHNM"
-    );
-  </script>
+<script>
+function toggleSystems() {
+  const grid = document.getElementById("moreSystems");
+  const btn = document.getElementById("systemsBtn");
 
-  <script src="https://unpkg.com/html5-qrcode"></script>
+  grid.classList.toggle("hidden");
 
-  <style>
-    * { box-sizing: border-box; }
+  if (grid.classList.contains("hidden")) {
+    btn.innerText = "Ver mais sistemas";
+  } else {
+    btn.innerText = "Ver menos sistemas";
+  }
+}
 
-    body {
-      font-family: Arial, sans-serif;
-      background: #0f172a;
-      color: white;
-      margin: 0;
-    }
+function toggleApps() {
+  const grid = document.getElementById("appsGrid");
+  const btn = document.getElementById("appsBtn");
 
-    .wrap {
-      padding: 20px;
-      max-width: 980px;
-      margin: auto;
-    }
+  grid.classList.toggle("hidden");
 
-    .card {
-      background: #1e293b;
-      padding: 20px;
-      border-radius: 12px;
-      margin-bottom: 15px;
-    }
+  if (grid.classList.contains("hidden")) {
+    btn.innerText = "Ver apps";
+  } else {
+    btn.innerText = "Ocultar apps";
+  }
+}
 
-    button {
-      padding: 10px 12px;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: bold;
-    }
+function toggleTestimonials() {
+  const grid = document.getElementById("moreTestimonials");
+  const btn = document.getElementById("testimonialsBtn");
 
-    .primary {
-      background: #22c55e;
-      color: black;
-    }
+  grid.classList.toggle("hidden");
 
-    .ghost {
-      background: #334155;
-      color: white;
-    }
-
-    .danger {
-      background: #ef4444;
-      color: white;
-    }
-
-    input, select, textarea {
-      width: 100%;
-      padding: 10px;
-      border: none;
-      border-radius: 6px;
-      margin-top: 8px;
-      margin-bottom: 10px;
-    }
-
-    .menu {
-      display: flex;
-      gap: 6px;
-      flex-wrap: wrap;
-      margin-bottom: 15px;
-    }
-
-    .page {
-      display: none;
-    }
-
-    .page.active {
-      display: block;
-    }
-
-    .item {
-      background: #0b1220;
-      padding: 10px;
-      border-radius: 8px;
-      margin-top: 10px;
-      border: 1px solid rgba(255,255,255,.05);
-    }
-
-    .badge {
-      display: inline-block;
-      padding: 4px 8px;
-      border-radius: 999px;
-      background: #22c55e;
-      color: black;
-      font-size: 12px;
-      font-weight: bold;
-      margin-top: 6px;
-    }
-
-    .muted {
-      color: #cbd5e1;
-      font-size: 14px;
-    }
-
-    .grid {
-      display: grid;
-      gap: 12px;
-      grid-template-columns: 1fr;
-    }
-
-    #qr-reader {
-      width: 100%;
-      border-radius: 8px;
-      overflow: hidden;
-      background: #000;
-    }
-
-    #qr-result {
-      margin-top: 12px;
-      font-size: 14px;
-      color: #cbd5e1;
-    }
-
-    .row {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .row > * {
-      flex: 1;
-      min-width: 140px;
-    }
-  </style>
+  if (grid.classList.contains("hidden")) {
+    btn.innerText = "Ver todos";
+  } else {
+    btn.innerText = "Ver menos";
+  }
+}
+</script>
 </head>
-<body>
-  <div class="wrap">
-    <div id="login">
-      <div class="card">
-        <h2>Idcontrol</h2>
 
-        <input id="email" type="email" placeholder="Email" />
-        <input id="password" type="password" placeholder="Senha" />
+<body class="bg-[#050c08] text-white">
 
-        <div class="row">
-          <button class="primary" onclick="login()">Entrar</button>
-          <button class="ghost" onclick="signup()">Criar conta</button>
-        </div>
+<div class="min-h-screen">
+
+<section class="max-w-7xl mx-auto px-6 py-16">
+
+<div class="max-w-4xl">
+  <div class="flex items-center gap-4">
+    <img
+      src="https://desengo.github.io/Hibrity/logo-hibrity.png"
+      alt="Hibrity"
+      class="w-14 h-14 object-contain"
+      onerror="this.style.display='none'"
+    >
+
+    <h1 class="text-4xl md:text-6xl font-black tracking-tight">
+      Hibrity ai
+    </h1>
+  </div>
+
+  <p class="mt-4 text-lg text-zinc-300">
+    O melhor de dois mundos.
+  </p>
+</div>
+
+<!-- SISTEMAS -->
+<div class="mt-14">
+  <h2 class="text-xl font-bold mb-6">
+    Sistemas
+  </h2>
+
+  <!-- GRID PRINCIPAL -->
+  <div class="grid grid-cols-2 gap-4">
+
+    <!-- RouterGo -->
+    <a
+      href="https://routergo.netlify.app"
+      class="rounded-2xl border border-[#18ff6d]/30 bg-white/5 p-5 shadow-lg hover:border-[#18ff6d]/60 transition"
+    >
+      <div class="w-10 h-10 rounded-xl bg-[#18ff6d]/15 flex items-center justify-center text-xl">
+        🚚
+      </div>
+
+      <h3 class="text-lg font-bold mt-4">
+        RouterGo
+      </h3>
+
+      <p class="text-zinc-400 text-sm mt-2 line-clamp-2">
+        Sistema logístico com roteirização e app Entregago.
+      </p>
+
+      <div class="mt-4 text-xs text-[#18ff6d] font-semibold">
+        Disponível
+      </div>
+    </a>
+
+    <!-- RH Digital -->
+    <div class="rounded-2xl border border-[#18ff6d]/20 bg-white/5 p-5 shadow-lg">
+      <div class="w-10 h-10 rounded-xl bg-[#18ff6d]/15 flex items-center justify-center text-xl">
+        👥
+      </div>
+
+      <h3 class="text-lg font-bold mt-4">
+        RH Digital
+      </h3>
+
+      <p class="text-zinc-400 text-sm mt-2 line-clamp-2">
+        Gestão de pessoas e equipes.
+      </p>
+
+      <div class="mt-4 text-xs text-zinc-400">
+        Em desenvolvimento
       </div>
     </div>
 
-    <div id="app" style="display:none">
-      <div class="menu">
-        <button onclick="openPage('dashboard')">Dashboard</button>
-        <button onclick="openPage('people')">Pessoas</button>
-        <button onclick="openPage('visitors')">Visitantes</button>
-        <button onclick="openPage('tags')">Tags</button>
-        <button onclick="openPage('access')">Acessos</button>
-        <button onclick="openPage('inside')">Quem está dentro</button>
-        <button onclick="openPage('qr')">Leitor QR</button>
-        <button onclick="openPage('history')">Histórico</button>
-        <button onclick="location.href='ocr.html'">OCR</button>
-        <button class="danger" onclick="logout()">Sair</button>
+  </div>
+
+  <!-- BOTÃO ABAIXO DOS CARDS -->
+  <div class="flex justify-center mt-6">
+    <button
+      id="systemsBtn"
+      onclick="toggleSystems()"
+      class="px-6 py-3 rounded-xl border border-white/10 bg-white/5 font-semibold hover:bg-white/10 transition"
+    >
+      Ver mais sistemas
+    </button>
+  </div>
+
+  <!-- SISTEMAS OCULTOS -->
+  <div id="moreSystems" class="hidden mt-8 grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
+
+    <!-- Ede -->
+    <div class="rounded-2xl border border-white/10 bg-white/5 p-5 shadow-lg">
+      <div class="w-10 h-10 rounded-xl bg-[#18ff6d]/15 flex items-center justify-center text-xl">🧾</div>
+      <h3 class="text-lg font-bold mt-4">Ede</h3>
+      <p class="text-zinc-400 text-sm mt-2 line-clamp-2">Plataforma de operações digitais.</p>
+      <div class="mt-4 text-xs text-zinc-400">Em desenvolvimento</div>
+    </div>
+
+    <!-- Guardio -->
+    <div class="rounded-2xl border border-white/10 bg-white/5 p-5 shadow-lg">
+      <div class="w-10 h-10 rounded-xl bg-[#18ff6d]/15 flex items-center justify-center text-xl">🔐</div>
+      <h3 class="text-lg font-bold mt-4">Guardio</h3>
+      <p class="text-zinc-400 text-sm mt-2 line-clamp-2">Controle de acesso e gestão de pessoas.</p>
+      <div class="mt-4 text-xs text-zinc-400">Em desenvolvimento</div>
+    </div>
+
+    <!-- Gersco -->
+    <div class="rounded-2xl border border-white/10 bg-white/5 p-5 shadow-lg">
+      <div class="w-10 h-10 rounded-xl bg-[#18ff6d]/15 flex items-center justify-center text-xl">🎓</div>
+      <h3 class="text-lg font-bold mt-4">Gersco</h3>
+      <p class="text-zinc-400 text-sm mt-2 line-clamp-2">Gestão educacional.</p>
+      <div class="mt-4 text-xs text-zinc-400">Em desenvolvimento</div>
+    </div>
+
+    <!-- Finager -->
+    <div class="rounded-2xl border border-white/10 bg-white/5 p-5 shadow-lg">
+      <div class="w-10 h-10 rounded-xl bg-[#18ff6d]/15 flex items-center justify-center text-xl">💰</div>
+      <h3 class="text-lg font-bold mt-4">Finager</h3>
+      <p class="text-zinc-400 text-sm mt-2 line-clamp-2">Gestão financeira para empresas.</p>
+      <div class="mt-4 text-xs text-zinc-400">Em desenvolvimento</div>
+    </div>
+
+    <!-- Idcontrol -->
+    <div class="rounded-2xl border border-white/10 bg-white/5 p-5 shadow-lg">
+      <div class="w-10 h-10 rounded-xl bg-[#18ff6d]/15 flex items-center justify-center text-xl">📍</div>
+      <h3 class="text-lg font-bold mt-4">Idcontrol</h3>
+      <p class="text-zinc-400 text-sm mt-2 line-clamp-2">Monitoramento responsável familiar.</p>
+      <div class="mt-4 text-xs text-zinc-400">Em desenvolvimento</div>
+    </div>
+
+    <!-- Mantene -->
+    <div class="rounded-2xl border border-white/10 bg-white/5 p-5 shadow-lg">
+      <div class="w-10 h-10 rounded-xl bg-[#18ff6d]/15 flex items-center justify-center text-xl">🛠️</div>
+      <h3 class="text-lg font-bold mt-4">Mantene</h3>
+      <p class="text-zinc-400 text-sm mt-2 line-clamp-2">Gestão de manutenção predial e ativos.</p>
+      <div class="mt-4 text-xs text-zinc-400">Em desenvolvimento</div>
+    </div>
+
+    <!-- Imobix -->
+    <div class="rounded-2xl border border-white/10 bg-white/5 p-5 shadow-lg">
+      <div class="w-10 h-10 rounded-xl bg-[#18ff6d]/15 flex items-center justify-center text-xl">🏢</div>
+      <h3 class="text-lg font-bold mt-4">Imobix</h3>
+      <p class="text-zinc-400 text-sm mt-2 line-clamp-2">Gestão de imóveis, contratos e clientes para imobiliárias.</p>
+      <div class="mt-4 text-xs text-zinc-400">Em desenvolvimento</div>
+    </div>
+
+    <!-- Oficor -->
+    <div class="rounded-2xl border border-white/10 bg-white/5 p-5 shadow-lg">
+      <div class="w-10 h-10 rounded-xl bg-[#18ff6d]/15 flex items-center justify-center text-xl">🔧</div>
+      <h3 class="text-lg font-bold mt-4">Oficor</h3>
+      <p class="text-zinc-400 text-sm mt-2 line-clamp-2">Gestão de serviços, clientes e ordens de serviço para oficinas.</p>
+      <div class="mt-4 text-xs text-zinc-400">Em desenvolvimento</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- APPS -->
+<div class="mt-20">
+
+  <h2 class="text-xl font-bold mb-6">
+    Apps
+  </h2>
+
+  <!-- CARD APPS -->
+  <div class="rounded-2xl border border-white/10 bg-white/5 p-6 shadow-lg">
+    <div class="flex items-center justify-between gap-4">
+      <div>
+        <h3 class="text-lg font-bold">
+          Hibrity Apps
+        </h3>
+
+        <p class="text-zinc-400 text-sm mt-2 max-w-md">
+          Aplicativos voltados ao público geral, incluindo ferramentas,
+          produtividade, entretenimento e soluções baseadas em inteligência artificial.
+        </p>
       </div>
 
-      <div id="dashboard" class="page active">
-        <div class="card">
-          <h3>Painel</h3>
-          <div id="stats"></div>
-        </div>
-      </div>
-
-      <div id="people" class="page">
-        <div class="card">
-          <h3>Cadastrar pessoa</h3>
-          <input id="person_name" placeholder="Nome completo" />
-          <input id="person_document" placeholder="Documento" />
-          <select id="person_type">
-            <option value="employee">Funcionário</option>
-            <option value="resident">Morador</option>
-            <option value="provider">Prestador</option>
-            <option value="other">Outro</option>
-          </select>
-          <button class="primary" onclick="savePerson()">Salvar</button>
-        </div>
-
-        <div class="card">
-          <h3>Lista de pessoas</h3>
-          <div id="people_list"></div>
-        </div>
-      </div>
-
-      <div id="visitors" class="page">
-        <div class="card">
-          <h3>Cadastrar visitante</h3>
-          <input id="visitor_name" placeholder="Nome" />
-          <input id="visitor_document" placeholder="Documento" />
-          <input id="visitor_host" placeholder="Responsável" />
-          <button class="primary" onclick="saveVisitor()">Salvar</button>
-        </div>
-
-        <div class="card">
-          <h3>Lista de visitantes</h3>
-          <div id="visitors_list"></div>
-        </div>
-      </div>
-
-      <div id="tags" class="page">
-        <div class="card">
-          <h3>Cadastrar tag</h3>
-
-          <select id="tag_target_type" onchange="toggleTagTargetType()">
-            <option value="person">Pessoa</option>
-            <option value="visitor">Visitante</option>
-          </select>
-
-          <select id="tag_person"></select>
-          <select id="tag_visitor" style="display:none"></select>
-
-          <input id="tag_code" placeholder="Código da tag" />
-
-          <select id="tag_type">
-            <option value="qr">QR Code</option>
-            <option value="rfid">RFID</option>
-            <option value="nfc">NFC</option>
-            <option value="card">Cartão</option>
-            <option value="manual">Manual</option>
-          </select>
-
-          <button class="primary" onclick="saveTag()">Salvar tag</button>
-        </div>
-
-        <div class="card">
-          <h3>Lista de tags</h3>
-          <div id="tags_list"></div>
-        </div>
-      </div>
-
-      <div id="access" class="page">
-        <div class="card">
-          <h3>Registrar acesso</h3>
-
-          <select id="access_target_type" onchange="toggleTargetType()">
-            <option value="person">Pessoa</option>
-            <option value="visitor">Visitante</option>
-          </select>
-
-          <select id="access_person"></select>
-          <select id="access_visitor" style="display:none"></select>
-
-          <select id="access_type">
-            <option value="entry">Entrada</option>
-            <option value="exit">Saída</option>
-          </select>
-
-          <input id="access_location" placeholder="Local" />
-          <textarea id="access_notes" placeholder="Observações"></textarea>
-
-          <button class="primary" onclick="saveAccess()">Registrar</button>
-        </div>
-
-        <div class="card">
-          <h3>Últimos acessos</h3>
-          <div id="access_list"></div>
-        </div>
-      </div>
-
-      <div id="inside" class="page">
-        <div class="card">
-          <h3>Quem está dentro agora</h3>
-          <div id="inside_list"></div>
-        </div>
-      </div>
-
-      <div id="qr" class="page">
-        <div class="card">
-          <h3>Leitor de QR Code</h3>
-          <p class="muted">Aponte a câmera para o QR de uma tag cadastrada.</p>
-          <div id="qr-reader"></div>
-          <div id="qr-result"></div>
-
-          <hr style="margin:20px 0;border:0;border-top:1px solid #334155">
-
-          <h3>Digitar código manualmente</h3>
-          <input id="manual_tag_code" placeholder="Digite o código da tag ou QR" />
-          <button class="primary" onclick="submitManualTag()">Registrar por código</button>
-        </div>
-      </div>
-
-      <div id="history" class="page">
-        <div class="card">
-          <h3>Histórico</h3>
-          <div id="history_list"></div>
-        </div>
-      </div>
+      <button
+        id="appsBtn"
+        onclick="toggleApps()"
+        class="bg-[#18ff6d] text-black text-sm px-5 py-3 rounded-xl font-semibold"
+      >
+        Ver apps
+      </button>
     </div>
   </div>
 
-  <script>
-    let qrScanner = null;
-    let qrRunning = false;
-
-    function openPage(page) {
-      document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
-      document.getElementById(page).classList.add("active");
-
-      if (page === "qr") {
-        startQRScanner();
-      } else {
-        stopQRScanner();
-      }
-    }
-
-    function toggleTargetType() {
-      const type = document.getElementById("access_target_type").value;
-      const personSelect = document.getElementById("access_person");
-      const visitorSelect = document.getElementById("access_visitor");
-
-      if (type === "person") {
-        personSelect.style.display = "block";
-        visitorSelect.style.display = "none";
-      } else {
-        personSelect.style.display = "none";
-        visitorSelect.style.display = "block";
-      }
-    }
-
-    function toggleTagTargetType() {
-      const type = document.getElementById("tag_target_type").value;
-      const personSelect = document.getElementById("tag_person");
-      const visitorSelect = document.getElementById("tag_visitor");
-
-      if (type === "person") {
-        personSelect.style.display = "block";
-        visitorSelect.style.display = "none";
-      } else {
-        personSelect.style.display = "none";
-        visitorSelect.style.display = "block";
-      }
-    }
-
-    async function login() {
-      const email = document.getElementById("email").value.trim();
-      const password = document.getElementById("password").value.trim();
-
-      const { error } = await supabase.auth.signInWithPassword({ email, password });
-
-      if (error) {
-        alert(error.message);
-        return;
-      }
-
-      init();
-    }
-
-    async function signup() {
-      const email = document.getElementById("email").value.trim();
-      const password = document.getElementById("password").value.trim();
-
-      const { error } = await supabase.auth.signUp({ email, password });
-
-      if (error) {
-        alert(error.message);
-        return;
-      }
-
-      alert("Conta criada");
-    }
-
-    async function logout() {
-      await stopQRScanner();
-      await supabase.auth.signOut();
-      location.reload();
-    }
-
-    async function getUser() {
-      const { data } = await supabase.auth.getUser();
-      return data.user;
-    }
-
-    async function addHistory(title, description) {
-      const user = await getUser();
-      if (!user) return;
-
-      await supabase.from("history").insert({
-        title,
-        description,
-        created_by: user.id
-      });
-    }
-
-    async function savePerson() {
-      const user = await getUser();
-      if (!user) return;
-
-      const name = document.getElementById("person_name").value.trim();
-      const doc = document.getElementById("person_document").value.trim();
-      const type = document.getElementById("person_type").value;
-
-      if (!name) {
-        alert("Nome obrigatório");
-        return;
-      }
-
-      const { error } = await supabase.from("people").insert({
-        full_name: name,
-        document: doc,
-        type,
-        status: "active",
-        created_by: user.id
-      });
-
-      if (error) {
-        alert(error.message);
-        return;
-      }
-
-      await addHistory("Pessoa cadastrada", `${name} foi cadastrada no sistema.`);
-
-      document.getElementById("person_name").value = "";
-      document.getElementById("person_document").value = "";
-
-      await loadPeople();
-      await loadHistory();
-      await loadStats();
-    }
-
-    async function saveVisitor() {
-      const user = await getUser();
-      if (!user) return;
-
-      const name = document.getElementById("visitor_name").value.trim();
-      const doc = document.getElementById("visitor_document").value.trim();
-      const host = document.getElementById("visitor_host").value.trim();
-
-      if (!name) {
-        alert("Nome obrigatório");
-        return;
-      }
-
-      const { error } = await supabase.from("visitors").insert({
-        full_name: name,
-        document: doc,
-        host_name: host,
-        status: "pending",
-        created_by: user.id
-      });
-
-      if (error) {
-        alert(error.message);
-        return;
-      }
-
-      await addHistory("Visitante cadastrado", `${name} foi cadastrado como visitante.`);
-
-      document.getElementById("visitor_name").value = "";
-      document.getElementById("visitor_document").value = "";
-      document.getElementById("visitor_host").value = "";
-
-      await loadVisitors();
-      await loadHistory();
-      await loadStats();
-    }
-
-    async function saveTag() {
-      const user = await getUser();
-      if (!user) return;
-
-      const targetType = document.getElementById("tag_target_type").value;
-      const personId = document.getElementById("tag_person").value;
-      const visitorId = document.getElementById("tag_visitor").value;
-      const code = document.getElementById("tag_code").value.trim();
-      const tagType = document.getElementById("tag_type").value;
-
-      if (!code) {
-        alert("Código da tag obrigatório");
-        return;
-      }
-
-      if (targetType === "person" && !personId) {
-        alert("Selecione uma pessoa");
-        return;
-      }
-
-      if (targetType === "visitor" && !visitorId) {
-        alert("Selecione um visitante");
-        return;
-      }
-
-      const { error } = await supabase.from("tags").insert({
-        created_by: user.id,
-        person_id: targetType === "person" ? personId : null,
-        visitor_id: targetType === "visitor" ? visitorId : null,
-        code,
-        tag_type: tagType,
-        active: true
-      });
-
-      if (error) {
-        alert(error.message);
-        return;
-      }
-
-      await addHistory("Tag cadastrada", `Tag ${code} cadastrada com sucesso.`);
-
-      document.getElementById("tag_code").value = "";
-
-      await loadTags();
-      await loadHistory();
-    }
-
-    async function saveAccess() {
-      const user = await getUser();
-      if (!user) return;
-
-      const targetType = document.getElementById("access_target_type").value;
-      const personId = document.getElementById("access_person").value;
-      const visitorId = document.getElementById("access_visitor").value;
-      const type = document.getElementById("access_type").value;
-      const location = document.getElementById("access_location").value.trim();
-      const notes = document.getElementById("access_notes").value.trim();
-
-      if (targetType === "person" && !personId) {
-        alert("Selecione uma pessoa");
-        return;
-      }
-
-      if (targetType === "visitor" && !visitorId) {
-        alert("Selecione um visitante");
-        return;
-      }
-
-      const payload = {
-        access_type: type,
-        location_name: location || null,
-        notes: notes || null,
-        method: "manual",
-        created_by: user.id,
-        person_id: targetType === "person" ? personId : null,
-        visitor_id: targetType === "visitor" ? visitorId : null
-      };
-
-      const { error } = await supabase.from("access_logs").insert(payload);
-
-      if (error) {
-        alert(error.message);
-        return;
-      }
-
-      await addHistory(
-        "Acesso registrado",
-        `${type === "entry" ? "Entrada" : "Saída"} registrada manualmente.`
-      );
-
-      document.getElementById("access_location").value = "";
-      document.getElementById("access_notes").value = "";
-
-      await loadAccess();
-      await loadInside();
-      await loadHistory();
-      await loadStats();
-    }
-
-    async function registerAccessByTag(tagCode) {
-      const user = await getUser();
-      if (!user) return;
-
-      const { data: tag, error: tagError } = await supabase
-        .from("tags")
-        .select("*")
-        .eq("code", tagCode)
-        .eq("active", true)
-        .single();
-
-      if (tagError || !tag) {
-        document.getElementById("qr-result").innerHTML = `<div class="item">Tag não encontrada: ${tagCode}</div>`;
-        return;
-      }
-
-      const { error } = await supabase.from("access_logs").insert({
-        created_by: user.id,
-        person_id: tag.person_id,
-        visitor_id: tag.visitor_id,
-        access_type: "entry",
-        method: "tag",
-        location_name: "QR Code",
-        notes: `Leitura da tag ${tagCode}`
-      });
-
-      if (error) {
-        document.getElementById("qr-result").innerHTML = `<div class="item">Erro ao registrar acesso: ${error.message}</div>`;
-        return;
-      }
-
-      await addHistory("Acesso por tag", `Tag ${tagCode} utilizada para entrada.`);
-
-      document.getElementById("qr-result").innerHTML = `<div class="item">Acesso registrado com sucesso para a tag: <b>${tagCode}</b></div>`;
-
-      await loadAccess();
-      await loadInside();
-      await loadHistory();
-      await loadStats();
-    }
-
-    async function submitManualTag() {
-      const code = document.getElementById("manual_tag_code").value.trim();
-
-      if (!code) {
-        alert("Digite um código.");
-        return;
-      }
-
-      document.getElementById("qr-result").innerHTML =
-        `<div class="item">Processando código: <b>${code}</b></div>`;
-
-      await registerAccessByTag(code);
-
-      document.getElementById("manual_tag_code").value = "";
-    }
-
-    async function loadPeople() {
-      const { data, error } = await supabase
-        .from("people")
-        .select("*")
-        .order("created_at", { ascending: false });
-
-      const list = document.getElementById("people_list");
-      const accessSelect = document.getElementById("access_person");
-      const tagSelect = document.getElementById("tag_person");
-
-      list.innerHTML = "";
-      accessSelect.innerHTML = "";
-      tagSelect.innerHTML = "";
-
-      if (error) {
-        list.innerHTML = `<div class="item">Erro ao carregar pessoas</div>`;
-        return;
-      }
-
-      if (!data || data.length === 0) {
-        list.innerHTML = `<div class="item">Nenhuma pessoa cadastrada</div>`;
-        accessSelect.innerHTML = `<option value="">Nenhuma pessoa</option>`;
-        tagSelect.innerHTML = `<option value="">Nenhuma pessoa</option>`;
-        return;
-      }
-
-      data.forEach(p => {
-        list.innerHTML += `<div class="item"><b>${p.full_name}</b><br>Documento: ${p.document || "-"}<br>Tipo: ${p.type || "-"}</div>`;
-        accessSelect.innerHTML += `<option value="${p.id}">${p.full_name}</option>`;
-        tagSelect.innerHTML += `<option value="${p.id}">${p.full_name}</option>`;
-      });
-    }
-
-    async function loadVisitors() {
-      const { data, error } = await supabase
-        .from("visitors")
-        .select("*")
-        .order("created_at", { ascending: false });
-
-      const list = document.getElementById("visitors_list");
-      const accessSelect = document.getElementById("access_visitor");
-      const tagSelect = document.getElementById("tag_visitor");
-
-      list.innerHTML = "";
-      accessSelect.innerHTML = "";
-      tagSelect.innerHTML = "";
-
-      if (error) {
-        list.innerHTML = `<div class="item">Erro ao carregar visitantes</div>`;
-        return;
-      }
-
-      if (!data || data.length === 0) {
-        list.innerHTML = `<div class="item">Nenhum visitante cadastrado</div>`;
-        accessSelect.innerHTML = `<option value="">Nenhum visitante</option>`;
-        tagSelect.innerHTML = `<option value="">Nenhum visitante</option>`;
-        return;
-      }
-
-      data.forEach(v => {
-        list.innerHTML += `<div class="item"><b>${v.full_name}</b><br>Documento: ${v.document || "-"}<br>Responsável: ${v.host_name || "-"}</div>`;
-        accessSelect.innerHTML += `<option value="${v.id}">${v.full_name}</option>`;
-        tagSelect.innerHTML += `<option value="${v.id}">${v.full_name}</option>`;
-      });
-    }
-
-    async function loadTags() {
-      const { data, error } = await supabase
-        .from("tags")
-        .select("*")
-        .order("created_at", { ascending: false });
-
-      const list = document.getElementById("tags_list");
-      list.innerHTML = "";
-
-      if (error) {
-        list.innerHTML = `<div class="item">Erro ao carregar tags</div>`;
-        return;
-      }
-
-      if (!data || data.length === 0) {
-        list.innerHTML = `<div class="item">Nenhuma tag cadastrada</div>`;
-        return;
-      }
-
-      const { data: peopleData } = await supabase.from("people").select("id, full_name");
-      const { data: visitorData } = await supabase.from("visitors").select("id, full_name");
-
-      const peopleMap = {};
-      const visitorsMap = {};
-
-      (peopleData || []).forEach(p => peopleMap[p.id] = p.full_name);
-      (visitorData || []).forEach(v => visitorsMap[v.id] = v.full_name);
-
-      data.forEach(t => {
-        const owner = t.person_id ? peopleMap[t.person_id] : visitorsMap[t.visitor_id];
-        list.innerHTML += `
-          <div class="item">
-            <b>${t.code}</b><br>
-            Tipo: ${t.tag_type}<br>
-            Vinculado a: ${owner || "—"}<br>
-            Status: ${t.active ? "Ativa" : "Inativa"}
-          </div>
-        `;
-      });
-    }
-
-    async function loadAccess() {
-      const { data, error } = await supabase
-        .from("access_logs")
-        .select("*")
-        .order("created_at", { ascending: false })
-        .limit(20);
-
-      const list = document.getElementById("access_list");
-      list.innerHTML = "";
-
-      if (error) {
-        list.innerHTML = `<div class="item">Erro ao carregar acessos</div>`;
-        return;
-      }
-
-      if (!data || data.length === 0) {
-        list.innerHTML = `<div class="item">Nenhum acesso registrado</div>`;
-        return;
-      }
-
-      data.forEach(a => {
-        list.innerHTML += `
-          <div class="item">
-            <b>${a.access_type === "entry" ? "Entrada" : "Saída"}</b><br>
-            Método: ${a.method || "-"}<br>
-            Local: ${a.location_name || "-"}<br>
-            Observações: ${a.notes || "-"}
-          </div>
-        `;
-      });
-    }
-
-    async function loadHistory() {
-      const { data, error } = await supabase
-        .from("history")
-        .select("*")
-        .order("created_at", { ascending: false });
-
-      const list = document.getElementById("history_list");
-      list.innerHTML = "";
-
-      if (error) {
-        list.innerHTML = `<div class="item">Erro ao carregar histórico</div>`;
-        return;
-      }
-
-      if (!data || data.length === 0) {
-        list.innerHTML = `<div class="item">Nenhum histórico</div>`;
-        return;
-      }
-
-      data.forEach(h => {
-        list.innerHTML += `
-          <div class="item">
-            <b>${h.title || "Registro"}</b><br>
-            ${h.description || "-"}
-          </div>
-        `;
-      });
-    }
-
-    async function loadInside() {
-      const insideList = document.getElementById("inside_list");
-      insideList.innerHTML = "";
-
-      const { data: accessData, error } = await supabase
-        .from("access_logs")
-        .select("*")
-        .order("created_at", { ascending: false });
-
-      if (error) {
-        insideList.innerHTML = `<div class="item">Erro ao carregar presença atual</div>`;
-        return;
-      }
-
-      const latestByTarget = {};
-
-      (accessData || []).forEach(a => {
-        const key = a.person_id ? `person_${a.person_id}` : `visitor_${a.visitor_id}`;
-        if (!latestByTarget[key]) latestByTarget[key] = a;
-      });
-
-      const present = Object.values(latestByTarget).filter(a => a.access_type === "entry");
-
-      if (present.length === 0) {
-        insideList.innerHTML = `<div class="item">Ninguém está dentro no momento</div>`;
-        return;
-      }
-
-      const personIds = present.filter(x => x.person_id).map(x => x.person_id);
-      const visitorIds = present.filter(x => x.visitor_id).map(x => x.visitor_id);
-
-      const peopleMap = {};
-      const visitorsMap = {};
-
-      if (personIds.length) {
-        const { data: peopleData } = await supabase.from("people").select("id, full_name").in("id", personIds);
-        (peopleData || []).forEach(p => peopleMap[p.id] = p.full_name);
-      }
-
-      if (visitorIds.length) {
-        const { data: visitorData } = await supabase.from("visitors").select("id, full_name").in("id", visitorIds);
-        (visitorData || []).forEach(v => visitorsMap[v.id] = v.full_name);
-      }
-
-      present.forEach(a => {
-        const name = a.person_id ? peopleMap[a.person_id] : visitorsMap[a.visitor_id];
-        const kind = a.person_id ? "Pessoa" : "Visitante";
-
-        insideList.innerHTML += `
-          <div class="item">
-            <b>${name || "Registro"}</b><br>
-            ${kind}<br>
-            Local: ${a.location_name || "-"}<br>
-            <span class="badge">Dentro</span>
-          </div>
-        `;
-      });
-    }
-
-    async function loadStats() {
-      const peopleRes = await supabase.from("people").select("*", { count: "exact", head: true });
-      const visitorsRes = await supabase.from("visitors").select("*", { count: "exact", head: true });
-      const accessRes = await supabase.from("access_logs").select("*", { count: "exact", head: true });
-      const tagsRes = await supabase.from("tags").select("*", { count: "exact", head: true });
-
-      const { data: accessData } = await supabase
-        .from("access_logs")
-        .select("*")
-        .order("created_at", { ascending: false });
-
-      const latestByTarget = {};
-      (accessData || []).forEach(a => {
-        const key = a.person_id ? `person_${a.person_id}` : `visitor_${a.visitor_id}`;
-        if (!latestByTarget[key]) latestByTarget[key] = a;
-      });
-
-      const insideCount = Object.values(latestByTarget).filter(a => a.access_type === "entry").length;
-
-      document.getElementById("stats").innerHTML = `
-        <div class="item">Pessoas: ${peopleRes.count || 0}</div>
-        <div class="item">Visitantes: ${visitorsRes.count || 0}</div>
-        <div class="item">Tags: ${tagsRes.count || 0}</div>
-        <div class="item">Acessos: ${accessRes.count || 0}</div>
-        <div class="item">Dentro agora: ${insideCount}</div>
-      `;
-    }
-
-    async function startQRScanner() {
-      if (qrRunning) return;
-
-      try {
-        if (!qrScanner) {
-          qrScanner = new Html5Qrcode("qr-reader");
-        }
-
-        await qrScanner.start(
-          { facingMode: "environment" },
-          { fps: 10, qrbox: 250 },
-          async (decodedText) => {
-            document.getElementById("qr-result").innerHTML = `<div class="item">QR detectado: <b>${decodedText}</b></div>`;
-            await stopQRScanner();
-            await registerAccessByTag(decodedText);
-          },
-          () => {}
-        );
-
-        qrRunning = true;
-      } catch (err) {
-        document.getElementById("qr-result").innerHTML = `<div class="item">Erro ao iniciar câmera. Verifique a permissão.</div>`;
-      }
-    }
-
-    async function stopQRScanner() {
-      if (qrScanner && qrRunning) {
-        try {
-          await qrScanner.stop();
-          await qrScanner.clear();
-        } catch (e) {}
-        qrRunning = false;
-      }
-    }
-
-    async function init() {
-      document.getElementById("login").style.display = "none";
-      document.getElementById("app").style.display = "block";
-
-      await loadPeople();
-      await loadVisitors();
-      await loadTags();
-      await loadAccess();
-      await loadInside();
-      await loadHistory();
-      await loadStats();
-
-      toggleTargetType();
-      toggleTagTargetType();
-    }
-
-    (async () => {
-      const { data } = await supabase.auth.getSession();
-      if (data.session) {
-        init();
-      }
-    })();
-
-    window.submitManualTag = submitManualTag;
-  </script>
+  <!-- GRID APPS -->
+  <div id="appsGrid" class="hidden mt-8 grid grid-cols-4 md:grid-cols-6 xl:grid-cols-8 gap-4">
+
+    <!-- Scanix -->
+    <div class="flex flex-col items-center">
+      <div class="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center text-xl">📄</div>
+      <span class="text-xs mt-2">Scanix</span>
+    </div>
+
+    <!-- Rotina+ -->
+    <div class="flex flex-col items-center">
+      <div class="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center text-xl">📅</div>
+      <span class="text-xs mt-2">Rotina+</span>
+    </div>
+
+    <!-- Localfy -->
+    <div class="flex flex-col items-center">
+      <div class="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center text-xl">📍</div>
+      <span class="text-xs mt-2">Localfy</span>
+    </div>
+
+    <!-- Vizi -->
+    <div class="flex flex-col items-center">
+      <div class="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center text-xl">🧭</div>
+      <span class="text-xs mt-2">Vizi</span>
+    </div>
+
+    <!-- PlayHub -->
+    <div class="flex flex-col items-center">
+      <div class="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center text-xl">🎮</div>
+      <span class="text-xs mt-2">PlayHub</span>
+    </div>
+
+    <!-- PixAI -->
+    <div class="flex flex-col items-center">
+      <div class="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center text-xl">🖼️</div>
+      <span class="text-xs mt-2">PixAI</span>
+    </div>
+
+    <!-- WriteAI -->
+    <div class="flex flex-col items-center">
+      <div class="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center text-xl">✍️</div>
+      <span class="text-xs mt-2">WriteAI</span>
+    </div>
+
+    <!-- SolveAI -->
+    <div class="flex flex-col items-center">
+      <div class="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center text-xl">🤖</div>
+      <span class="text-xs mt-2">SolveAI</span>
+    </div>
+
+  </div>
+</div>
+
+</section>
+
+<!-- MÉTRICAS -->
+<section class="max-w-7xl mx-auto px-6 pb-20">
+  <div class="grid md:grid-cols-3 gap-4 md:gap-6">
+
+    <div class="rounded-3xl border border-white/10 bg-white/5 p-5 md:p-8 text-center shadow-xl">
+      <div class="text-2xl md:text-4xl font-black text-[#18ff6d]">+150 mil</div>
+      <div class="mt-2 md:mt-3 text-zinc-300 text-base md:text-lg">usuários</div>
+    </div>
+
+    <div class="rounded-3xl border border-white/10 bg-white/5 p-5 md:p-8 text-center shadow-xl">
+      <div class="text-2xl md:text-4xl font-black text-[#18ff6d]">+200 mil</div>
+      <div class="mt-2 md:mt-3 text-zinc-300 text-base md:text-lg">acessos</div>
+    </div>
+
+    <div class="rounded-3xl border border-white/10 bg-white/5 p-5 md:p-8 text-center shadow-xl">
+      <div class="text-2xl md:text-4xl font-black text-[#18ff6d]">3+</div>
+      <div class="mt-2 md:mt-3 text-zinc-300 text-base md:text-lg">plataformas em evolução</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- DEPOIMENTOS -->
+<section class="max-w-7xl mx-auto px-6 pb-20">
+
+  <div class="mb-12 flex items-center justify-between gap-4">
+    <div>
+      <h2 class="text-4xl md:text-5xl font-black">Quem utiliza aprova</h2>
+      <p class="text-zinc-400 mt-4 text-lg">
+        Soluções pensadas para operação, produtividade e crescimento digital.
+      </p>
+    </div>
+
+    <button
+      id="testimonialsBtn"
+      onclick="toggleTestimonials()"
+      class="px-5 py-3 rounded-xl border border-white/10 bg-white/5 font-semibold hover:bg-white/10 transition whitespace-nowrap"
+    >
+      Ver todos
+    </button>
+  </div>
+
+  <!-- DESTAQUE -->
+  <div class="grid md:grid-cols-2 gap-8">
+
+
+    <div class="rounded-3xl border border-[#18ff6d]/20 bg-white/5 p-8 shadow-xl">
+      <p class="text-zinc-300 leading-7 text-lg">
+        “O ecossistema ficou muito mais claro. Conseguimos centralizar processos e evoluir a operação com muito mais segurança.”
+      </p>
+
+      <div class="mt-6">
+        <div class="font-bold">Rafael Mendes</div>
+        <div class="text-sm text-zinc-500">Diretor de operações</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- DEPOIMENTOS OCULTOS -->
+  <div id="moreTestimonials" class="hidden mt-8 grid md:grid-cols-3 gap-8">
+
+    <div class="rounded-3xl border border-white/10 bg-white/5 p-8 shadow-xl">
+      <p class="text-zinc-300 leading-7">
+        “A proposta da Hibrity mostra maturidade de plataforma. É o tipo de estrutura que permite crescer sem perder organização.”
+      </p>
+
+      <div class="mt-6">
+        <div class="font-bold">Juliana Freitas</div>
+        <div class="text-sm text-zinc-500">Consultora de tecnologia</div>
+      </div>
+    </div>
+
+    <div class="rounded-3xl border border-white/10 bg-white/5 p-8 shadow-xl">
+      <p class="text-zinc-300 leading-7">
+        “A clareza na apresentação dos módulos trouxe mais confiança para avaliar novas frentes digitais dentro da operação.”
+      </p>
+
+      <div class="mt-6">
+        <div class="font-bold">Carlos Henrique</div>
+        <div class="text-sm text-zinc-500">Coordenador administrativo</div>
+      </div>
+    </div>
+
+    <div class="rounded-3xl border border-white/10 bg-white/5 p-8 shadow-xl">
+      <p class="text-zinc-300 leading-7">
+        “A Hibrity transmite visão de longo prazo. Não é só um sistema isolado, é uma plataforma com potencial real de integração.”
+      </p>
+
+      <div class="mt-6">
+        <div class="font-bold">Patrícia Almeida</div>
+        <div class="text-sm text-zinc-500">Gestora de inovação</div>
+      </div>
+    </div>
+
+    <div class="rounded-3xl border border-white/10 bg-white/5 p-8 shadow-xl">
+      <p class="text-zinc-300 leading-7">
+        “Mesmo em desenvolvimento, a estrutura dos módulos já mostra organização e uma proposta muito mais madura que projetos comuns.”
+      </p>
+
+      <div class="mt-6">
+        <div class="font-bold">Eduardo Nunes</div>
+        <div class="text-sm text-zinc-500">Analista de processos</div>
+      </div>
+    </div>
+
+  </div>
+
+</section>
+
+<!-- FOOTER -->
+<footer class="border-t border-white/10">
+  <div class="max-w-7xl mx-auto px-6 py-8 text-sm text-zinc-500 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+    <div>Hibrity • Ecossistema de tecnologia</div>
+    <div>RouterGo • RH Digital • Ede • Guardio • Gersco • Finager • Idcontrol • Mantene • Imobix • Oficor • Hibrity Apps</div>
+  </div>
+</footer>
+
+</div>
+
 </body>
 </html>
