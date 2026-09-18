@@ -6,6 +6,7 @@
 <title>Neovizer</title>
 <meta name="robots" content="noindex, nofollow">
 <script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 html, body{background:#050507 !important; color:white; margin:0; padding:0}
@@ -23,6 +24,12 @@ body::after{content:''; position:fixed; top:-10%; left:10%; width:800px; height:
 .editable.selected{outline:2px solid #2563eb; outline-offset:3px; background:rgba(37,99,235,0.15)}
 .btn-del{position:absolute; top:8px; right:8px; width:36px; height:36px; border-radius:50%; background:#EF4444; color:white; border:2px solid white; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:bold; z-index:40; box-shadow:0 4px 20px rgba(0,0,0,0.5)}
 .btn-edit{position:absolute; top:8px; left:8px; width:36px; height:36px; border-radius:50%; background:#121214; color:white; border:1px solid rgba(255,255,255,0.2); display:flex; align-items:center; justify-content:center; font-size:12px; z-index:40}
+/* Drag handle */
+.btn-drag{position:absolute; top:8px; left:52px; width:36px; height:36px; border-radius:50%; background:#2563eb; color:white; border:2px solid white; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:bold; z-index:41; cursor:grab; box-shadow:0 4px 20px rgba(0,0,0,0.5); letter-spacing:-2px}
+.btn-drag:active{cursor:grabbing}
+.sortable-ghost{opacity:0.35; outline:2px dashed #fbbf24 !important; outline-offset:4px}
+.sortable-chosen{transform:scale(1.02)}
+.sortable-drag{box-shadow:0 20px 60px rgba(37,99,235,0.5) !important}
 .toolbar{position:fixed; bottom:0; left:0; right:0; background:#0F0F12; border-top:1px solid rgba(255,255,255,0.08); padding:10px 12px; display:flex; gap:8px; z-index:100; transform:translateY(100%); transition:transform 0.25s}
 .toolbar.show{transform:translateY(0)}
 .toolbar button{flex:1; height:44px; border-radius:999px; font-weight:700; font-size:13px; border:none}
@@ -33,12 +40,14 @@ body::after{content:''; position:fixed; top:-10%; left:10%; width:800px; height:
 header, footer, section{background:transparent !important}
 #extras{background:#050507 !important}
 .builder-lock #builderBar, .builder-lock #toolbar, .builder-lock #addMenu{opacity:0.25; pointer-events:none; filter:blur(2px)}
-.builder-lock .btn-edit, .builder-lock .btn-del{display:none !important}
+.builder-lock .btn-edit, .builder-lock .btn-del, .builder-lock .btn-drag{display:none !important}
 .img-upload-box{border:2px dashed rgba(255,255,255,0.2); border-radius:12px; padding:10px; text-align:center; cursor:pointer; transition:all .2s; margin-bottom:12px}
 .img-upload-box:hover{border-color:#2563eb; background:rgba(37,99,235,0.08)}
 .img-upload-box input[type=file]{display:none}
 .img-upload-box .up-label{font-size:12px; color:rgba(255,255,255,0.6)}
 .img-upload-box img{max-height:90px; margin:0 auto 6px; border-radius:8px; display:block}
+#saveBadge{position:fixed; top:70px; right:20px; background:#10b981; color:white; padding:8px 16px; border-radius:999px; font-size:13px; font-weight:600; z-index:300; opacity:0; transform:translateY(-10px); transition:all .3s; pointer-events:none}
+#saveBadge.show{opacity:1; transform:translateY(0)}
 </style>
 </head>
 <body>
@@ -51,9 +60,14 @@ header, footer, section{background:transparent !important}
   </div>
   <div class="flex gap-1.5">
     <button onclick="toggleAddMenu()" class="h-9 px-3 rounded-full bg-white text-black text-xs font-bold">+ Adicionar</button>
+    <button onclick="manualSave()" class="h-9 px-3 rounded-full bg-[#10b981] text-white text-xs font-bold">💾 Salvar</button>
+    <button onclick="resetData()" class="h-9 px-3 rounded-full bg-white/10 border border-white/10 text-white text-xs font-bold">↺ Reset</button>
     <button onclick="exportar()" class="h-9 px-3 rounded-full gradient-bg text-xs font-bold">Exportar</button>
   </div>
 </div>
+
+<!-- SAVE BADGE -->
+<div id="saveBadge">✓ Salvo no navegador</div>
 
 <!-- ADD MENU -->
 <div id="addMenu" class="add-menu">
@@ -107,6 +121,7 @@ header, footer, section{background:transparent !important}
 <section class="tech-bg py-8 sm:py-12">
   <div class="relative z-10 max-w-[1280px] mx-auto px-4 sm:px-8">
     <div class="max-w-[700px] mb-6">
+      </div>
       <h2 class="editable font-sora font-black text-[24px] sm:text-[36px] leading-[0.95] text-white" onclick="selectText(this)">Descubra <span class="gradient-text">mais oportunidades</span></h2>
       <p class="editable text-white/40 text-[13px] sm:text-[15px] mt-3 leading-relaxed" onclick="selectText(this)">Mais categorias, produtos e serviços selecionados para você.</p>
     </div>
@@ -117,7 +132,6 @@ header, footer, section{background:transparent !important}
 <!-- FOOTER -->
 <footer class="max-w-[1280px] mx-auto px-4 sm:px-8 py-8 border-t border-white/[0.06] flex flex-col sm:flex-row justify-between gap-4 text-sm text-white/30">
   <div class="editable" onclick="selectText(this)">© 2026 Neovizer • Todos os direitos reservados</div>
-  <div class="editable" onclick="selectText(this)">Tema Tech Dark • Edição via ?edit</div>
 </footer>
 </div>
 
@@ -184,35 +198,108 @@ function fontSizeSelect(key, currentVal, label){
 }
 function parseFontSize(v){ const n = parseInt(v,10); return Number.isFinite(n)?n:null; }
 
-// ====== DADOS ======
-let cards = [
-  {id:1, badge:'🦷', title:'Odontológicos', desc:'Zircônia, fresas, discos e acabamento premium para laboratórios.', img:'https://images.unsplash.com/photo-1606811971618-4486d14f3f99?w=600', link:'produtos-odontologicos.html', titleSize:16, descSize:13, badgeSize:10},
-  {id:2, badge:'📦', title:'Todos os Produtos', desc:'Ferramentas, eletrônicos JBL, Alexa, gadgets e muito mais.', img:'https://images.unsplash.com/photo-1558655146-d09347e92766?w=600', link:'produtos.html', titleSize:16, descSize:13, badgeSize:10},
-  {id:3, badge:'🛠️', title:'Serviços', desc:'Consultoria, manutenção e suporte técnico especializado.', img:'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=600', link:'servicos.html', titleSize:16, descSize:13, badgeSize:10},
-  {id:4, badge:'🔥', title:'Promoções', desc:'Ofertas da semana com até 40% de desconto e frete grátis.', img:'https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=600', link:'produtos.html?promo=1', titleSize:16, descSize:13, badgeSize:10}
-];
+// ====== ESTADO PADRÃO (usado no Reset) ======
+const DEFAULT_STATE = {
+  cards: [
+    {id:1, badge:'🦷', title:'Odontológicos', desc:'Zircônia, fresas, discos e acabamento premium para laboratórios.', img:'https://images.unsplash.com/photo-1606811971618-4486d14f3f99?w=600', link:'produtos-odontologicos.html', titleSize:16, descSize:13, badgeSize:10},
+    {id:2, badge:'📦', title:'Todos os Produtos', desc:'Ferramentas, eletrônicos JBL, Alexa, gadgets e muito mais.', img:'https://images.unsplash.com/photo-1558655146-d09347e92766?w=600', link:'produtos.html', titleSize:16, descSize:13, badgeSize:10},
+    {id:3, badge:'🛠️', title:'Serviços', desc:'Consultoria, manutenção e suporte técnico especializado.', img:'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=600', link:'servicos.html', titleSize:16, descSize:13, badgeSize:10},
+    {id:4, badge:'🔥', title:'Promoções', desc:'Ofertas da semana com até 40% de desconto e frete grátis.', img:'https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=600', link:'produtos.html?promo=1', titleSize:16, descSize:13, badgeSize:10}
+  ],
+  banners: [
+    {title:'Neovizer — tecnologia que transforma', desc:'Plataforma completa de produtos importados, serviços e soluções premium.', cta1:'Explorar', cta1Link:'produtos.html', cta2:'Fale Conosco', cta2Link:'contato.html', img:'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1600', titleSize:48, descSize:16, ctaSize:14}
+  ],
+  bannersAfter: [
+    {title:'Ofertas da semana', desc:'Até 40% OFF em produtos selecionados — só essa semana.', cta1:'Ver Ofertas', cta1Link:'produtos.html', cta2:'Fale Conosco', cta2Link:'contato.html', img:'https://images.unsplash.com/photo-1557804506-669a67965ba0?w=1200', titleSize:32, descSize:15, ctaSize:12}
+  ],
+  cardsAfter: [
+    {id:5, badge:'⚡', title:'Eletrônicos', desc:'JBL, Alexa, gadgets e tecnologia de ponta.', img:'https://images.unsplash.com/photo-1498049794561-7780e7231661?w=600', link:'produtos.html?cat=eletronicos', titleSize:16, descSize:13, badgeSize:10},
+    {id:6, badge:'🎧', title:'Áudio Premium', desc:'Fones, caixas de som e acessórios Hi-Fi.', img:'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600', link:'produtos.html?cat=audio', titleSize:16, descSize:13, badgeSize:10},
+    {id:7, badge:'💡', title:'Smart Home', desc:'Automação, lâmpadas e dispositivos conectados.', img:'https://images.unsplash.com/photo-1558002038-1055907df827?w=600', link:'produtos.html?cat=smart', titleSize:16, descSize:13, badgeSize:10},
+    {id:8, badge:'🚀', title:'Novidades', desc:'Recém-chegados e lançamentos exclusivos.', img:'https://images.unsplash.com/photo-1526738549149-8e07eca6c147?w=600', link:'produtos.html?cat=novidades', titleSize:16, descSize:13, badgeSize:10}
+  ],
+  extras: []
+};
 
-let banners = [
-  {title:'Neovizer — tecnologia que transforma', desc:'Plataforma completa de produtos importados, serviços e soluções premium.', cta1:'Explorar', cta1Link:'produtos.html', cta2:'Fale Conosco', cta2Link:'contato.html', img:'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1600', titleSize:48, descSize:16, ctaSize:14}
-];
+// ====== PERSISTÊNCIA ======
+const STORAGE_KEY = 'neovizer_builder_data_v2';
 
-let bannersAfter = [
-  {title:'Ofertas da semana', desc:'Até 40% OFF em produtos selecionados — só essa semana.', cta1:'Ver Ofertas', cta1Link:'produtos.html', cta2:'Fale Conosco', cta2Link:'contato.html', img:'https://images.unsplash.com/photo-1557804506-669a67965ba0?w=1200', titleSize:32, descSize:15, ctaSize:12}
-];
+function loadState(){
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if(raw){
+      const data = JSON.parse(raw);
+      return {
+        cards: Array.isArray(data.cards) && data.cards.length ? data.cards : JSON.parse(JSON.stringify(DEFAULT_STATE.cards)),
+        banners: Array.isArray(data.banners) && data.banners.length ? data.banners : JSON.parse(JSON.stringify(DEFAULT_STATE.banners)),
+        bannersAfter: Array.isArray(data.bannersAfter) ? data.bannersAfter : JSON.parse(JSON.stringify(DEFAULT_STATE.bannersAfter)),
+        cardsAfter: Array.isArray(data.cardsAfter) ? data.cardsAfter : JSON.parse(JSON.stringify(DEFAULT_STATE.cardsAfter)),
+        extras: Array.isArray(data.extras) ? data.extras : []
+      };
+    }
+  } catch(e){ console.warn('Erro ao carregar:', e); }
+  return JSON.parse(JSON.stringify(DEFAULT_STATE));
+}
 
-let cardsAfter = [
-  {id:5, badge:'⚡', title:'Eletrônicos', desc:'JBL, Alexa, gadgets e tecnologia de ponta.', img:'https://images.unsplash.com/photo-1498049794561-7780e7231661?w=600', link:'produtos.html?cat=eletronicos', titleSize:16, descSize:13, badgeSize:10},
-  {id:6, badge:'🎧', title:'Áudio Premium', desc:'Fones, caixas de som e acessórios Hi-Fi.', img:'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600', link:'produtos.html?cat=audio', titleSize:16, descSize:13, badgeSize:10},
-  {id:7, badge:'💡', title:'Smart Home', desc:'Automação, lâmpadas e dispositivos conectados.', img:'https://images.unsplash.com/photo-1558002038-1055907df827?w=600', link:'produtos.html?cat=smart', titleSize:16, descSize:13, badgeSize:10},
-  {id:8, badge:'🚀', title:'Novidades', desc:'Recém-chegados e lançamentos exclusivos.', img:'https://images.unsplash.com/photo-1526738549149-8e07eca6c147?w=600', link:'produtos.html?cat=novidades', titleSize:16, descSize:13, badgeSize:10}
-];
+function saveState(){
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({
+      cards, banners, bannersAfter, cardsAfter, extras
+    }));
+    showSaveBadge();
+    return true;
+  } catch(e){
+    console.warn('Erro ao salvar (storage cheio?):', e);
+    alert('⚠️ Armazenamento cheio. Remova imagens grandes ou exporte o HTML para uso final.');
+    return false;
+  }
+}
 
-let extras = [];
+function showSaveBadge(){
+  const badge = document.getElementById('saveBadge');
+  if(!badge) return;
+  badge.classList.add('show');
+  clearTimeout(window._saveBadgeTimer);
+  window._saveBadgeTimer = setTimeout(()=>badge.classList.remove('show'), 1500);
+}
+
+function manualSave(){
+  if(saveState()){
+    const badge = document.getElementById('saveBadge');
+    badge.textContent = '✓ Salvo no navegador';
+  }
+}
+
+function resetData(){
+  if(!confirm('⚠️ Isso vai apagar TODAS as suas edições e voltar ao estado original. Continuar?')) return;
+  localStorage.removeItem(STORAGE_KEY);
+  const fresh = JSON.parse(JSON.stringify(DEFAULT_STATE));
+  cards = fresh.cards;
+  banners = fresh.banners;
+  bannersAfter = fresh.bannersAfter;
+  cardsAfter = fresh.cardsAfter;
+  extras = fresh.extras;
+  render();
+  const badge = document.getElementById('saveBadge');
+  badge.textContent = '↺ Resetado ao padrão';
+  showSaveBadge();
+}
+
+// Inicializa com dados salvos
+const initialState = loadState();
+let cards = initialState.cards;
+let banners = initialState.banners;
+let bannersAfter = initialState.bannersAfter;
+let cardsAfter = initialState.cardsAfter;
+let extras = initialState.extras;
 
 let selectedEl=null, selectedType=null, selectedId=null;
 let curCard=null, curCardType='top';
 let curBanner=null, curBannerType='top';
 let curButton=null, curButtonEl=null;
+
+// Instâncias do Sortable (para destruir ao re-render)
+let sortableInstances = [];
 
 function checkLock(){
   const isGitHub = location.hostname.includes('github.io');
@@ -225,7 +312,6 @@ function checkLock(){
 
 function toggleAddMenu(){ document.getElementById('addMenu').classList.toggle('show'); }
 
-// Upload de imagem
 function imgUploadField(key, currentVal, onFileChange){
   return `<div class="img-upload-box" onclick="this.querySelector('input[type=file]').click()">
       ${currentVal?`<img src="${currentVal}">`:''}
@@ -242,7 +328,12 @@ function handleCardImage(input){
     const dataUrl = e.target.result;
     const arr = curCardType==='top'?cards:cardsAfter;
     const c = arr.find(x=>x.id===curCard);
-    if(c){ c.img = dataUrl; document.querySelector('#modalCardFields [data-key="img"]').value = dataUrl; render(); }
+    if(c){ 
+      c.img = dataUrl; 
+      document.querySelector('#modalCardFields [data-key="img"]').value = dataUrl; 
+      render(); 
+      saveState(); 
+    }
   };
   reader.readAsDataURL(file);
 }
@@ -255,14 +346,113 @@ function handleBannerImage(input){
     const dataUrl = e.target.result;
     const arr = curBannerType==='top'?banners:bannersAfter;
     const b = arr[curBanner];
-    if(b){ b.img = dataUrl; document.querySelector('#modalBannerFields [data-key="img"]').value = dataUrl; render(); }
+    if(b){ 
+      b.img = dataUrl; 
+      document.querySelector('#modalBannerFields [data-key="img"]').value = dataUrl; 
+      render(); 
+      saveState(); 
+    }
   };
   reader.readAsDataURL(file);
 }
 
+// ====== DRAG & DROP ======
+function initSortable(){
+  // Destrói instâncias antigas
+  sortableInstances.forEach(s=>{ if(s) s.destroy(); });
+  sortableInstances = [];
+
+  // Não ativa no modo travado
+  if(document.body.classList.contains('builder-lock')) return;
+
+  // Banners topo
+  const bTop = document.getElementById('banners');
+  if(bTop && bTop.children.length){
+    sortableInstances.push(new Sortable(bTop, {
+      animation: 200,
+      handle: '.btn-drag',
+      ghostClass: 'sortable-ghost',
+      chosenClass: 'sortable-chosen',
+      dragClass: 'sortable-drag',
+      onEnd: function(evt){
+        const moved = banners.splice(evt.oldIndex, 1)[0];
+        banners.splice(evt.newIndex, 0, moved);
+        saveState();
+      }
+    }));
+  }
+
+  // Cards topo
+  const gTop = document.getElementById('grid');
+  if(gTop && gTop.children.length){
+    sortableInstances.push(new Sortable(gTop, {
+      animation: 200,
+      handle: '.btn-drag',
+      ghostClass: 'sortable-ghost',
+      chosenClass: 'sortable-chosen',
+      dragClass: 'sortable-drag',
+      onEnd: function(evt){
+        const moved = cards.splice(evt.oldIndex, 1)[0];
+        cards.splice(evt.newIndex, 0, moved);
+        saveState();
+      }
+    }));
+  }
+
+  // Banners pós
+  const bAfter = document.getElementById('banners-after');
+  if(bAfter && bAfter.children.length){
+    sortableInstances.push(new Sortable(bAfter, {
+      animation: 200,
+      handle: '.btn-drag',
+      ghostClass: 'sortable-ghost',
+      chosenClass: 'sortable-chosen',
+      dragClass: 'sortable-drag',
+      onEnd: function(evt){
+        const moved = bannersAfter.splice(evt.oldIndex, 1)[0];
+        bannersAfter.splice(evt.newIndex, 0, moved);
+        saveState();
+      }
+    }));
+  }
+
+  // Cards pós
+  const gAfter = document.getElementById('grid-after');
+  if(gAfter && gAfter.children.length){
+    sortableInstances.push(new Sortable(gAfter, {
+      animation: 200,
+      handle: '.btn-drag',
+      ghostClass: 'sortable-ghost',
+      chosenClass: 'sortable-chosen',
+      dragClass: 'sortable-drag',
+      onEnd: function(evt){
+        const moved = cardsAfter.splice(evt.oldIndex, 1)[0];
+        cardsAfter.splice(evt.newIndex, 0, moved);
+        saveState();
+      }
+    }));
+  }
+
+  // Extras
+  const ex = document.getElementById('extras');
+  if(ex && ex.children.length){
+    sortableInstances.push(new Sortable(ex, {
+      animation: 200,
+      handle: '.btn-drag',
+      ghostClass: 'sortable-ghost',
+      chosenClass: 'sortable-chosen',
+      dragClass: 'sortable-drag',
+      onEnd: function(evt){
+        const moved = extras.splice(evt.oldIndex, 1)[0];
+        extras.splice(evt.newIndex, 0, moved);
+        saveState();
+      }
+    }));
+  }
+}
+
 // ====== RENDER ======
 function render(){
-  // BANNERS TOPO
   document.getElementById('banners').innerHTML = banners.map((b,i)=>{
     const tS=b.titleSize||48, dS=b.descSize||16, cS=b.ctaSize||14;
     return `<div class="relative w-full min-h-[50vh] flex items-center overflow-hidden border-b border-white/[0.06] bg-black">
@@ -278,20 +468,21 @@ function render(){
           </div>
         </div>
       </div>
+      <button class="btn-drag" title="Arraste para reordenar">⋮⋮</button>
       <button class="btn-edit" onclick="openBanner(${i},'top')">✏️</button>
       <button class="btn-del" onclick="deleteBanner(${i},'top')">✕</button>
     </div>`;
   }).join('');
 
-  // CARDS TOPO
-  document.getElementById('grid').innerHTML = cards.map(c=>{
+  document.getElementById('grid').innerHTML = cards.map((c, ci)=>{
     const tS=c.titleSize||16, dS=c.descSize||13, bS=c.badgeSize||10;
     return `<a href="${c.link||'#'}" target="_blank" class="relative card-tech rounded-[24px] overflow-hidden flex flex-col group" onclick="event.preventDefault(); selectCardLink(${c.id},'top', this)">
       <div class="relative aspect-[4/3] bg-black/50">
         <img src="${c.img}" class="w-full h-full object-cover opacity-70 group-hover:opacity-90 transition">
         <div class="absolute inset-0 bg-gradient-to-t from-[#050507] to-transparent opacity-80"></div>
         ${c.badge?`<div class="editable absolute top-3 left-3 px-2.5 py-1 rounded-full bg-white text-black font-bold" style="font-size:${bS}px" onclick="event.preventDefault(); selectCardText(${c.id},'top','badge', this)">${c.badge}</div>`:''}
-        <button class="btn-edit" onclick="event.preventDefault(); event.stopPropagation(); openCard(${c.id},'top')">✏️</button>
+        <button class="btn-drag" style="top:8px; left:52px" title="Arraste para reordenar" onclick="event.preventDefault(); event.stopPropagation();">⋮⋮</button>
+        <button class="btn-edit" style="top:8px; left:96px" onclick="event.preventDefault(); event.stopPropagation(); openCard(${c.id},'top')">✏️</button>
         <button class="btn-del" onclick="event.preventDefault(); event.stopPropagation(); deleteCard(${c.id},'top')">✕</button>
       </div>
       <div class="p-5 flex flex-col flex-1">
@@ -302,7 +493,6 @@ function render(){
     </a>`;
   }).join('');
 
-  // BANNERS PÓS
   document.getElementById('banners-after').innerHTML = bannersAfter.map((b,i)=>{
     const tS=b.titleSize||32, dS=b.descSize||15, cS=b.ctaSize||12;
     return `<div class="relative w-full h-[260px] sm:h-[320px] rounded-[24px] overflow-hidden flex items-center border border-white/[0.06] bg-black">
@@ -316,20 +506,21 @@ function render(){
           ${b.cta2?`<a href="${b.cta2Link||'#'}" target="_blank" class="editable px-4 py-2 rounded-full bg-white/[0.08] border border-white/10 text-white inline-flex" style="font-size:${cS}px" onclick="selectBannerLink(${i},'after','cta2', this); event.preventDefault()">${b.cta2}</a>`:''}
         </div>
       </div>
+      <button class="btn-drag" title="Arraste para reordenar">⋮⋮</button>
       <button class="btn-edit" onclick="openBanner(${i},'after')">✏️</button>
       <button class="btn-del" onclick="deleteBanner(${i},'after')">✕</button>
     </div>`;
   }).join('');
 
-  // CARDS PÓS
-  document.getElementById('grid-after').innerHTML = cardsAfter.map(c=>{
+  document.getElementById('grid-after').innerHTML = cardsAfter.map((c, ci)=>{
     const tS=c.titleSize||16, dS=c.descSize||13, bS=c.badgeSize||10;
     return `<a href="${c.link||'#'}" target="_blank" class="relative card-tech rounded-[24px] overflow-hidden flex flex-col group" onclick="event.preventDefault(); selectCardLink(${c.id},'after', this)">
       <div class="relative aspect-[4/3] bg-black/50">
         <img src="${c.img}" class="w-full h-full object-cover opacity-70 group-hover:opacity-90 transition">
         <div class="absolute inset-0 bg-gradient-to-t from-[#050507] to-transparent opacity-80"></div>
         ${c.badge?`<div class="editable absolute top-3 left-3 px-2.5 py-1 rounded-full bg-white text-black font-bold" style="font-size:${bS}px" onclick="event.preventDefault(); selectCardText(${c.id},'after','badge', this)">${c.badge}</div>`:''}
-        <button class="btn-edit" onclick="event.preventDefault(); event.stopPropagation(); openCard(${c.id},'after')">✏️</button>
+        <button class="btn-drag" style="top:8px; left:52px" title="Arraste para reordenar" onclick="event.preventDefault(); event.stopPropagation();">⋮⋮</button>
+        <button class="btn-edit" style="top:8px; left:96px" onclick="event.preventDefault(); event.stopPropagation(); openCard(${c.id},'after')">✏️</button>
         <button class="btn-del" onclick="event.preventDefault(); event.stopPropagation(); deleteCard(${c.id},'after')">✕</button>
       </div>
       <div class="p-5 flex flex-col flex-1">
@@ -340,29 +531,46 @@ function render(){
     </a>`;
   }).join('');
 
-  // EXTRAS
   document.getElementById('extras').innerHTML = extras.map((ex, idx)=> {
+    // Wrapper para permitir drag em cada extra
+    const wrapStart = `<div class="relative">`;
+    const wrapEnd = `<button class="btn-drag" style="position:absolute; top:8px; left:52px; z-index:41" title="Arraste para reordenar">⋮⋮</button></div>`;
+    
     if(ex.type==='button'){
       const cls = ex.style==='gradient'?'gradient-bg text-black': ex.style==='white'?'bg-white text-black': ex.style==='outline'?'bg-transparent border border-white/20 text-white':'bg-[#121214] border border-white/10 text-white';
-      return `<div class="relative flex justify-center py-3"><a href="${ex.link}" target="_blank" class="editable px-8 py-3.5 rounded-full font-bold text-sm ${cls}" onclick="selectExtra(${idx}, this); event.preventDefault()">${ex.text}</a><button class="btn-del" onclick="deleteExtra(${idx})">✕</button><button class="btn-edit" style="left:52px" onclick="openButtonEdit(${idx})">🔗</button></div>`;
+      return `${wrapStart}<div class="flex justify-center py-3"><a href="${ex.link}" target="_blank" class="editable px-8 py-3.5 rounded-full font-bold text-sm ${cls}" onclick="selectExtra(${idx}, this); event.preventDefault()">${ex.text}</a></div><button class="btn-del" onclick="deleteExtra(${idx})">✕</button><button class="btn-edit" style="position:absolute; top:8px; left:8px; z-index:41" onclick="openButtonEdit(${idx})">🔗</button>${wrapEnd}`;
     }
     if(ex.type==='text'){
-      return `<div class="relative py-4"><div class="editable text-[18px] leading-relaxed text-white/80" onclick="selectExtra(${idx}, this)">${ex.content}</div><button class="btn-del" onclick="deleteExtra(${idx})">✕</button></div>`;
+      return `${wrapStart}<div class="py-4"><div class="editable text-[18px] leading-relaxed text-white/80" onclick="selectExtra(${idx}, this)">${ex.content}</div></div><button class="btn-del" onclick="deleteExtra(${idx})">✕</button><button class="btn-edit" style="position:absolute; top:8px; left:8px; z-index:41" onclick="openGenericExtraEdit(${idx})">✏️</button>${wrapEnd}`;
     }
     if(ex.type==='image'){
-      return `<div class="relative"><a href="${ex.link||'#'}" target="_blank"><img src="${ex.src}" class="w-full rounded-[16px] border border-white/10"></a><button class="btn-edit" onclick="openImageEdit(${idx})">✏️</button><button class="btn-del" onclick="deleteExtra(${idx})">✕</button></div>`;
+      return `${wrapStart}<a href="${ex.link||'#'}" target="_blank"><img src="${ex.src}" class="w-full rounded-[16px] border border-white/10"></a><button class="btn-edit" style="position:absolute; top:8px; left:8px; z-index:41" onclick="openImageEdit(${idx})">✏️</button><button class="btn-del" onclick="deleteExtra(${idx})">✕</button>${wrapEnd}`;
     }
     if(ex.type==='cta'){
-      return `<div class="relative bg-[#0F0F12] rounded-[24px] p-8 text-center border border-white/[0.06]"><h3 class="editable font-sora font-bold text-[24px] mb-2" onclick="selectExtra(${idx}, this, 'title')">${ex.title}</h3><p class="editable text-white/40 mb-6" onclick="selectExtra(${idx}, this, 'desc')">${ex.desc}</p><a href="${ex.buttonLink}" target="_blank" class="editable px-8 py-3 rounded-full gradient-bg font-bold inline-block text-black" onclick="selectExtra(${idx}, this); event.preventDefault()">${ex.buttonText}</a><button class="btn-del" onclick="deleteExtra(${idx})">✕</button><button class="btn-edit" style="left:52px" onclick="openButtonEdit(${idx})">🔗</button></div>`;
+      return `${wrapStart}<div class="bg-[#0F0F12] rounded-[24px] p-8 text-center border border-white/[0.06]"><h3 class="editable font-sora font-bold text-[24px] mb-2" onclick="selectExtra(${idx}, this, 'title')">${ex.title}</h3><p class="editable text-white/40 mb-6" onclick="selectExtra(${idx}, this, 'desc')">${ex.desc}</p><a href="${ex.buttonLink}" target="_blank" class="editable px-8 py-3 rounded-full gradient-bg font-bold inline-block text-black" onclick="selectExtra(${idx}, this); event.preventDefault()">${ex.buttonText}</a></div><button class="btn-del" onclick="deleteExtra(${idx})">✕</button><button class="btn-edit" style="position:absolute; top:8px; left:8px; z-index:41" onclick="openButtonEdit(${idx})">🔗</button>${wrapEnd}`;
     }
     if(ex.type==='divider'){
-      return `<div class="relative py-6"><div class="h-[1px] bg-white/[0.06] w-full"></div><button class="btn-del" onclick="deleteExtra(${idx})">✕</button></div>`;
+      return `${wrapStart}<div class="py-6"><div class="h-[1px] bg-white/[0.06] w-full"></div></div><button class="btn-del" onclick="deleteExtra(${idx})">✕</button>${wrapEnd}`;
     }
     return '';
   }).join('');
+
+  // Ativa drag & drop após renderizar
+  initSortable();
 }
 
-// ====== SELEÇÃO ======
+// Função extra para editar texto do extra (quando clicar no lápis do bloco de texto)
+function openGenericExtraEdit(idx){
+  const ex = extras[idx];
+  if(!ex) return;
+  const newContent = prompt('Editar texto:', ex.content || '');
+  if(newContent !== null){
+    ex.content = newContent;
+    render();
+    saveState();
+  }
+}
+
 function selectText(el){ if(selectedEl) selectedEl.classList.remove('selected'); selectedEl=el; selectedType='text'; el.classList.add('selected'); document.getElementById('toolbar').classList.add('show'); }
 function selectCardText(id, type, field, el){ event.stopPropagation(); if(selectedEl) selectedEl.classList.remove('selected'); selectedEl=el; selectedType='cardText'; selectedId={id, type, field}; el.classList.add('selected'); document.getElementById('toolbar').classList.add('show'); }
 function selectCardLink(id, type, el){ event.stopPropagation(); if(selectedEl) selectedEl.classList.remove('selected'); selectedEl=el; selectedType='cardLink'; selectedId={id, type}; el.classList.add('selected'); document.getElementById('toolbar').classList.add('show'); }
@@ -371,7 +579,6 @@ function selectBannerLink(idx, type, field, el){ event.stopPropagation(); if(sel
 function selectExtra(idx, el, sub){ event.stopPropagation(); if(selectedEl) selectedEl.classList.remove('selected'); selectedEl=el; selectedType='extra'; selectedId={idx, sub}; el.classList.add('selected'); document.getElementById('toolbar').classList.add('show'); }
 function deselect(){ if(selectedEl){ selectedEl.classList.remove('selected'); selectedEl.contentEditable=false; } selectedEl=null; selectedType=null; selectedId=null; document.getElementById('toolbar').classList.remove('show'); }
 
-// ====== EDIÇÃO ======
 function editSelected(){
   if(!selectedEl) return;
   selectedEl.contentEditable=true;
@@ -379,24 +586,28 @@ function editSelected(){
   document.execCommand('selectAll', false, null);
   selectedEl.onblur = function(){
     this.contentEditable=false;
+    const val = this.innerText;
+    let changed = false;
     if(selectedType==='cardText'){
       const {id, type, field}=selectedId;
       const arr = type==='top'?cards:cardsAfter;
       const card=arr.find(c=>c.id===id);
-      if(card) card[field]=this.innerText;
+      if(card){ card[field]=val; changed=true; }
     } else if(selectedType==='bannerText'){
       const {idx, type, field}=selectedId;
       const arr = type==='top'?banners:bannersAfter;
-      if(arr[idx]) arr[idx][field]=this.innerText;
+      if(arr[idx]){ arr[idx][field]=val; changed=true; }
     } else if(selectedType==='extra'){
       const {idx, sub}=selectedId;
       if(extras[idx]){
-        if(extras[idx].type==='text') extras[idx].content=this.innerText;
-        else if(sub==='title') extras[idx].title=this.innerText;
-        else if(sub==='desc') extras[idx].desc=this.innerText;
-        else extras[idx].text=this.innerText;
+        if(extras[idx].type==='text') extras[idx].content=val;
+        else if(sub==='title') extras[idx].title=val;
+        else if(sub==='desc') extras[idx].desc=val;
+        else extras[idx].text=val;
+        changed=true;
       }
     }
+    if(changed) saveState();
   };
 }
 
@@ -444,6 +655,7 @@ function saveButton(){
   }
   document.getElementById('modalButton').classList.add('hidden');
   render();
+  saveState();
   deselect();
 }
 
@@ -468,29 +680,28 @@ function deleteSelected(){
     const arr = type==='top'?cards:cardsAfter;
     const card=arr.find(c=>c.id===id);
     if(card) card[field]='';
-    selectedEl.remove(); deselect(); return;
+    selectedEl.remove(); deselect(); saveState(); return;
   }
   if(selectedType==='bannerText'){
     const {idx, type, field}=selectedId;
     const arr = type==='top'?banners:bannersAfter;
     if(arr[idx]) arr[idx][field]='';
-    selectedEl.remove(); deselect(); return;
+    selectedEl.remove(); deselect(); saveState(); return;
   }
   selectedEl.remove(); deselect();
 }
 
-// ====== CRUD ======
 function deleteCard(id, type='top'){
   if(type==='top') cards = cards.filter(c=>c.id!==id);
   else cardsAfter = cardsAfter.filter(c=>c.id!==id);
-  render(); deselect();
+  render(); saveState(); deselect();
 }
 function deleteBanner(idx, type='top'){
   if(type==='top') banners.splice(idx,1);
   else bannersAfter.splice(idx,1);
-  render(); deselect();
+  render(); saveState(); deselect();
 }
-function deleteExtra(idx){ extras.splice(idx,1); render(); deselect(); }
+function deleteExtra(idx){ extras.splice(idx,1); render(); saveState(); deselect(); }
 
 function openCard(id, type='top'){
   curCard = id; curCardType = type;
@@ -523,7 +734,9 @@ function saveCard(){
     }
   });
   document.getElementById('modalCard').classList.add('hidden');
-  render(); deselect();
+  render();
+  saveState();
+  deselect();
 }
 
 function openBanner(idx, type='top'){
@@ -559,36 +772,79 @@ function saveBanner(){
     }
   });
   document.getElementById('modalBanner').classList.add('hidden');
-  render(); deselect();
+  render();
+  saveState();
+  deselect();
 }
 
 function openImageEdit(idx){
   const ex = extras[idx]; if(!ex) return;
-  const url = prompt('Nova URL imagem:', ex.src);
-  if(url){ ex.src = url; render(); }
+  const newBox = document.createElement('div');
+  newBox.innerHTML = `
+    <div class="fixed inset-0 z-[300] bg-black/80 backdrop-blur flex items-center justify-center p-4" onclick="if(event.target===this) this.remove()">
+      <div class="bg-[#121214] w-full max-w-[400px] rounded-[20px] p-6 border border-white/10">
+        <h3 class="font-sora font-bold mb-3">Substituir Imagem</h3>
+        ${imgUploadField('img', ex.src, 'handleExtraImage(this, '+idx+')')}
+        <input type="text" class="w-full px-4 py-3 rounded-xl bg-white/[0.06] border border-white/10 text-sm mb-3" id="extraImgUrl" placeholder="ou cole URL" value="${(ex.src||'').replace(/"/g,'&quot;')}">
+        <div class="flex gap-2">
+          <button onclick="this.closest('.fixed').remove()" class="flex-1 h-11 rounded-full bg-white/10">Cancelar</button>
+          <button onclick="applyExtraImgUrl(${idx})" class="flex-1 h-11 rounded-full gradient-bg font-bold">Aplicar URL</button>
+        </div>
+      </div>
+    </div>`;
+  document.body.appendChild(newBox.firstElementChild);
 }
 
-// ====== ADICIONAR ======
-function addCard(){ cards.unshift({id:Date.now(), badge:'NOVO', title:'Novo Card', desc:'Texto editável', img:'https://images.unsplash.com/photo-1558655146-d09347e92766?w=600', link:'#', titleSize:16, descSize:13, badgeSize:10}); render(); }
-function addCardAfter(){ cardsAfter.push({id:Date.now(), badge:'NOVO', title:'Card Pós', desc:'Descrição editável.', img:'https://images.unsplash.com/photo-1557804506-669a67965ba0?w=600', link:'#', titleSize:16, descSize:13, badgeSize:10}); render(); setTimeout(()=>{ document.getElementById('grid-after').scrollIntoView({behavior:'smooth'}); }, 100); }
-function addBanner(){ banners.push({title:'Novo Banner Topo', desc:'Descrição', cta1:'Botão 1', cta1Link:'#', cta2:'Botão 2', cta2Link:'#', img:'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1600', titleSize:48, descSize:16, ctaSize:14}); render(); }
-function addBannerAfter(){ bannersAfter.push({title:'Banner Pós-Cards', desc:'Adicione uma oferta ou destaque.', cta1:'Ver mais', cta1Link:'#', cta2:'', cta2Link:'', img:'https://images.unsplash.com/photo-1557804506-669a67965ba0?w=1200', titleSize:32, descSize:15, ctaSize:12}); render(); setTimeout(()=>{ document.getElementById('banners-after').scrollIntoView({behavior:'smooth'}); }, 100); }
-function addButton(){ extras.push({id:Date.now(), type:'button', text:'Clique Aqui', link:'#', style:'gradient'}); render(); }
-function addText(){ extras.push({id:Date.now(), type:'text', content:'Bloco de texto livre escuro.'}); render(); }
-function addImage(){ extras.push({id:Date.now(), type:'image', src:'https://images.unsplash.com/photo-1558655146-d09347e92766?w=1200', link:'#'}); render(); }
-function addCta(){ extras.push({id:Date.now(), type:'cta', title:'Pronto?', desc:'Texto CTA escuro.', buttonText:'Começar', buttonLink:'#'}); render(); }
-function addDivider(){ extras.push({id:Date.now(), type:'divider'}); render(); }
+function handleExtraImage(input, idx){
+  const file = input.files && input.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = e=>{
+    const dataUrl = e.target.result;
+    if(extras[idx]){
+      extras[idx].src = dataUrl;
+      render();
+      saveState();
+      const modal = input.closest('.fixed');
+      if(modal) modal.remove();
+    }
+  };
+  reader.readAsDataURL(file);
+}
 
-// ====== EXPORTAR ======
+function applyExtraImgUrl(idx){
+  const url = document.getElementById('extraImgUrl').value;
+  if(extras[idx]){
+    extras[idx].src = url;
+    render();
+    saveState();
+    document.querySelector('.fixed.z-\\[300\\]')?.remove();
+  }
+}
+
+function addCard(){ cards.unshift({id:Date.now(), badge:'NOVO', title:'Novo Card', desc:'Texto editável', img:'https://images.unsplash.com/photo-1558655146-d09347e92766?w=600', link:'#', titleSize:16, descSize:13, badgeSize:10}); render(); saveState(); }
+function addCardAfter(){ cardsAfter.push({id:Date.now(), badge:'NOVO', title:'Card Pós', desc:'Descrição editável.', img:'https://images.unsplash.com/photo-1557804506-669a67965ba0?w=600', link:'#', titleSize:16, descSize:13, badgeSize:10}); render(); saveState(); setTimeout(()=>{ document.getElementById('grid-after').scrollIntoView({behavior:'smooth'}); }, 100); }
+function addBanner(){ banners.push({title:'Novo Banner Topo', desc:'Descrição', cta1:'Botão 1', cta1Link:'#', cta2:'Botão 2', cta2Link:'#', img:'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1600', titleSize:48, descSize:16, ctaSize:14}); render(); saveState(); }
+function addBannerAfter(){ bannersAfter.push({title:'Banner Pós-Cards', desc:'Adicione uma oferta ou destaque.', cta1:'Ver mais', cta1Link:'#', cta2:'', cta2Link:'', img:'https://images.unsplash.com/photo-1557804506-669a67965ba0?w=1200', titleSize:32, descSize:15, ctaSize:12}); render(); saveState(); setTimeout(()=>{ document.getElementById('banners-after').scrollIntoView({behavior:'smooth'}); }, 100); }
+function addButton(){ extras.push({id:Date.now(), type:'button', text:'Clique Aqui', link:'#', style:'gradient'}); render(); saveState(); }
+function addText(){ extras.push({id:Date.now(), type:'text', content:'Bloco de texto livre escuro.'}); render(); saveState(); }
+function addImage(){ extras.push({id:Date.now(), type:'image', src:'https://images.unsplash.com/photo-1558655146-d09347e92766?w=1200', link:'#'}); render(); saveState(); }
+function addCta(){ extras.push({id:Date.now(), type:'cta', title:'Pronto?', desc:'Texto CTA escuro.', buttonText:'Começar', buttonLink:'#'}); render(); saveState(); }
+function addDivider(){ extras.push({id:Date.now(), type:'divider'}); render(); saveState(); }
+
 function exportar(){
   deselect();
+  // Salva estado final antes de exportar
+  saveState();
   const clone = document.documentElement.cloneNode(true);
   clone.querySelector('#builderBar')?.remove();
   clone.querySelector('#addMenu')?.remove();
   clone.querySelector('#toolbar')?.remove();
   clone.querySelector('#lockedBadge')?.remove();
+  clone.querySelector('#saveBadge')?.remove();
   clone.querySelectorAll('.btn-del').forEach(e=>e.remove());
   clone.querySelectorAll('.btn-edit').forEach(e=>e.remove());
+  clone.querySelectorAll('.btn-drag').forEach(e=>e.remove());
   clone.querySelectorAll('[id^=modal]').forEach(e=>e.remove());
   clone.querySelectorAll('.editable').forEach(el=>{
     el.classList.remove('editable','selected');
@@ -596,7 +852,12 @@ function exportar(){
     el.removeAttribute('contenteditable');
   });
   clone.querySelectorAll('a').forEach(a=>{ if(a.getAttribute('onclick')) a.removeAttribute('onclick'); });
-  clone.querySelectorAll('script').forEach(s=>{ if(s.textContent.includes('builderBar')) s.remove(); });
+  // Remove scripts do builder (mantém apenas o essencial se houver)
+  clone.querySelectorAll('script').forEach(s=>{
+    if(s.textContent.includes('builderBar') || s.textContent.includes('STORAGE_KEY') || s.textContent.includes('Sortable')) s.remove();
+  });
+  // Remove CDN do Sortable
+  clone.querySelectorAll('script[src*="sortable"]').forEach(s=>s.remove());
   const html = '<!DOCTYPE html>\n' + clone.outerHTML;
   const blob = new Blob([html], {type:'text/html'});
   const a = document.createElement('a');
@@ -606,7 +867,7 @@ function exportar(){
 }
 
 document.addEventListener('click', function(e){
-  if(!e.target.closest('.editable') && !e.target.closest('#toolbar') && !e.target.closest('.btn-del') && !e.target.closest('.btn-edit') && !e.target.closest('#builderBar') && !e.target.closest('#addMenu') && !e.target.closest('[id^=modal]')){
+  if(!e.target.closest('.editable') && !e.target.closest('#toolbar') && !e.target.closest('.btn-del') && !e.target.closest('.btn-edit') && !e.target.closest('.btn-drag') && !e.target.closest('#builderBar') && !e.target.closest('#addMenu') && !e.target.closest('[id^=modal]') && !e.target.closest('.img-upload-box') && !e.target.closest('.fixed')){
     deselect();
   }
 });
